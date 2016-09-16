@@ -1,6 +1,6 @@
 # Imap
 Interactive mapping in R
 
-Install with:
+Install or upgrade with:
 
     devtools::install_github("John-R-Wallace/Imap")
