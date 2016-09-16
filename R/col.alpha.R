@@ -1,4 +1,4 @@
-function (col, alpha = 0.5) 
+col.alpha <- function (col, alpha = 0.5) 
 {
     FUNC <- function(col, alpha = alpha) {
         COL <- col2rgb(col)/255
