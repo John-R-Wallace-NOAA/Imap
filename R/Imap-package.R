@@ -121,19 +121,7 @@ NULL
 #' Database
 #' 
 #' Both the high and full resolutions of GSHHS have been converted for use in
-#' R.  The high resolution of GSHHS is provided with the Imap package, the full
-#' resolution is available on the internet by using the following commands:
-#' 
-#' >
-#' browseURL("http://imap-for-r.googlecode.com/files/world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp")
-#' 
-#' > load(choose.files(getwd(), "Find and load the file
-#' world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp"))
-#' 
-#' Or without choose.files(), where 'saved.path' is the path where the file was
-#' saved:
-#' 
-#' > load("/saved.path/world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp")
+#' R.  The high resolution of GSHHS is provided with the Imap package, the full resolution is available on GitHub by using the git.world.f() function. 
 #' 
 #' The full resolution will not work well on low-end computers. Start with
 #' 'ilines(world.f.land)' if there is a problem. Occasionally starting over
