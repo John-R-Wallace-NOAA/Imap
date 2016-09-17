@@ -121,7 +121,7 @@ NULL
 #' Database
 #' 
 #' Both the high and full resolutions of GSHHS have been converted for use in
-#' R.  The high resolution of GSHHS is provided with the Imap package, the full resolution is available on GitHub by using the git.world.f() function. 
+#' R.  The high resolution of GSHHS is provided with the Imap package, the full resolution is available on GitHub by using the     Git.World.f.HiRez() function. 
 #' 
 #' The full resolution will not work well on low-end computers. Start with
 #' 'ilines(world.f.land)' if there is a problem. Occasionally starting over
