@@ -150,7 +150,7 @@ function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, ar
             do.call(plot, c(list(x = longrange, y = latrange, 
                 xlab = ifelse(is.null(dimnames(area)[[2]]), "", 
                   dimnames(area)[[2]][1]), ylab = ifelse(is.null(dimnames(area)[[2]]), 
-                  "", dimnames(area)[[2]][2])), plot.dots))
+                  "", dimnames(area)[[2]][2])), type = "n", plot.dots))
         if (grid) 
             abline(v = xticks, h = yticks, lty = 2, lwd = 0)
     }
