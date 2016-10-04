@@ -1,19 +1,19 @@
 
-depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), 0.005), SoCal_1as = TRUE, method = 'bilinear', plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot) {
-  '  '
-  '  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c("BEST_LON_DD", "BEST_LAT_DD")]) # Auto no plot and 0.005 deg block '
-  '  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE'
-  '  ' 
+depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), 0.005), SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot) {
+  "  "
+  "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
+  "  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE  "
+  "  " 
 
-  '  For getting the bathymetry into R, I followed Tom Wainwright here: http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1  '  
-  '  Using Coastal Relief Mapping project that has(3 arc-sec) bathymetry for most of the US coastline and 1 arc-sec for Southern CA.  ' 
-  '  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html'
-  '  '
-  '  '
+  "  For getting the bathymetry into R, I followed Tom Wainwright here: http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1  "  
+  "  Using Coastal Relief Mapping project that has(3 arc-sec) bathymetry for most of the US coastline and 1 arc-sec for Southern CA.  " 
+  "  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html  "
+  "  "
+  "  "
   require(JRWToolBox) 
-  ' Load into R with: devtools::install_github("John-R-Wallace/R-ToolBox")  '
+  " Load into R with: devtools::install_github('John-R-Wallace/R-ToolBox')  "
   require(Imap) 
-  ' Load into R with: devtools::install_github("John-R-Wallace/Imap")  '
+  " Load into R with: devtools::install_github('John-R-Wallace/Imap')  "
   lib(sp)      
   lib(rgdal)   
   lib(raster)
