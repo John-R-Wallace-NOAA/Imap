@@ -1,32 +1,45 @@
 
-depthMeters  <- function(LongLat, blockSize = 0.01, method = 'bilinear', plot = ifelse(N < 5, TRUE, FALSE), quiet = TRUE) {
+depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), 0.005), SoCal_1as = TRUE, method = 'bilinear', plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot) {
+  '  '
+  '  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c("BEST_LON_DD", "BEST_LAT_DD")]) # Auto no plot and 0.005 deg block '
+  '  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE'
+  '  ' 
 
   '  For getting the bathymetry into R, I followed Tom Wainwright here: http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1  '  
-  '  Using Coastal Relief Mapping project that has fine-resolution (0.3 arc-sec) bathymetry for most of the US coastline.  ' 
-  '  Map is here:  '
-  '  https://www.arcgis.com/home/webmap/viewer.html?basemapUrl=//services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer&urls=//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crm_hillshade/MapServer  '
+  '  Using Coastal Relief Mapping project that has(3 arc-sec) bathymetry for most of the US coastline and 1 arc-sec for Southern CA.  ' 
+  '  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html'
   '  '
-  '  devtools::install_github("John-R-Wallace/R-ToolBox")  '
-  require(JRWToolBox)  
+  '  '
+  require(JRWToolBox) 
+  ' Load into R with: devtools::install_github("John-R-Wallace/R-ToolBox")  '
+  require(Imap) 
+  ' Load into R with: devtools::install_github("John-R-Wallace/Imap")  '
   lib(sp)      
   lib(rgdal)   
   lib(raster)
 
-  DepthM <- function(LongLat, blockSize = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
+  DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
  
-    minLon <- LongLat[1] - blockSize
-    maxLon <- LongLat[1] + blockSize
-    minLat <- LongLat[2] - blockSize
-    maxLat <- LongLat[2] + blockSize
+    Long <- as.numeric(LongLat[1])
+    Lat <- as.numeric(LongLat[2])
 
-    URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/",
-             "wcs.groovy?filename=crm.tif&",
-             "request=getcoverage&version=1.0.0&service=wcs&",
-             "coverage=crm&CRS=EPSG:4326&format=geotiff&",
-             "resx=0.000833333333333334&resy=0.000833333333333334&bbox=",
-             minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
+    minLon <- Long - blockSizeDegs/2
+    maxLon <- Long + blockSizeDegs/2
+    minLat <- Lat - blockSizeDegs/2
+    maxLat <- Lat + blockSizeDegs/2
 
-    Fname <- "crm_WACoast_TMP_DEPTH_FUNTION.tif"
+   if(Long > -123 & Long < -115.999999944 & Lat > 30.99972218222 & Lat < 36.99972223022 & SoCal_1as) 
+
+      URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=socal_1as.tif&", 
+             "request=getcoverage&version=1.0.0&service=wcs&", "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&",
+             "resx=0.000277777780000&resy=0.000277777780000&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
+    else
+
+       URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=crm.tif&",
+             "request=getcoverage&version=1.0.0&service=wcs&", "coverage=crm&CRS=EPSG:4326&format=geotiff&",
+             "resx=0.000833333333333334&resy=0.000833333333333334&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
+
+    Fname <- "TMP.tif"
   
     optUSR <- options(warn = -2)
     on.exit(options(optUSR))
@@ -35,18 +48,23 @@ depthMeters  <- function(LongLat, blockSize = 0.01, method = 'bilinear', plot = 
 
     if(plot) {
       plot(BathySmall)
+      ilines(world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
+      
     }
   
     - extract(BathySmall, LongLat, method = method)
   }
+  
+  if(is.null(nrow(LongLat)))
+     LongLat <- as.data.frame(t(LongLat))
 
   Out <- NULL
   N <- nrow(LongLat)
   for( i in 1:N) {
     if(N >= 5)
        bar(i, N)
-    Out <- c(Out, DepthM(LongLat[i, ], blockSize = blockSize, method = method, plot = plot, quiet = quiet))
+    Out <- c(Out, DepthM(LongLat[i, ], blockSizeDegs = blockSizeDegs, method = method, plot = plot, quiet = quiet))
   }
 
   Out
