@@ -15,6 +15,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   require(Imap) 
   " Load into R with: devtools::install_github('John-R-Wallace/Imap')  "
  
+  JRWToolBox::lib(rgdal) 
   JRWToolBox::lib(raster)
 
   DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
