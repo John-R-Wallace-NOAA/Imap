@@ -14,8 +14,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   " Load into R with: devtools::install_github('John-R-Wallace/R-ToolBox')  "
   require(Imap) 
   " Load into R with: devtools::install_github('John-R-Wallace/Imap')  "
-  JRWToolBox::lib(sp)      
-  JRWToolBox::lib(rgdal)   
+ 
   JRWToolBox::lib(raster)
 
   DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
@@ -44,7 +43,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
     optUSR <- options(warn = -2)
     on.exit(options(optUSR))
     download.file(URL, Fname, mode="wb", cacheOK="false", quiet = quiet)
-    BathySmall <<- raster(Fname)
+    BathySmall <- raster(Fname)
 
     if(plot) {
       plot(BathySmall)
