@@ -64,7 +64,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   for( i in 1:N) {
     if(N >= 5)
        bar(i, N)
-    Out <- c(Out, DepthM(LongLat[i, ], blockSizeDegs = blockSizeDegs, method = method, plot = plot, quiet = quiet))
+    try(Out[i] <- DepthM(LongLat[i, , drop=FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, quiet = quiet), silent = TRUE)
   }
 
   Out
