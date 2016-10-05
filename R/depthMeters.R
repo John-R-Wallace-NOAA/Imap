@@ -42,7 +42,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   
     optUSR <- options(warn = -2)
     on.exit(options(optUSR))
-    download.file(URL, Fname, mode="wb", cacheOK="false", quiet = quiet)
+    download.file(URL, Fname, mode="wb", cacheOK=FALSE, quiet = quiet)
     BathySmall <- raster(Fname)
 
     if(plot) {
