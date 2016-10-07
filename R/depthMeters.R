@@ -60,8 +60,8 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   if(is.null(nrow(LongLat)))
      LongLat <- as.data.frame(t(LongLat))
 
-  Out <- NULL
   N <- nrow(LongLat)
+  Out <- rep(NA, N)
   for( i in 1:N) {
     if(N >= 5)
        JRWToolBox::bar(i, N)
