@@ -5,14 +5,16 @@ depthMeters <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 
   "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
   "  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE  "
   "  " 
-
   "  For getting the bathymetry into R, I followed Tom Wainwright here: http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1  "  
   "  Using Coastal Relief Mapping project that has(3 arc-sec) bathymetry for most of the US coastline and 1 arc-sec for Southern CA.  " 
   "  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html  "
   "  "
   "    Note that a long/lat point may be in a volume, but outside of the data area, in which case a zero depth is reported.  "
-  "    Here is an example: (Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F))    "
+  "    Here is an example: (Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F))  "
   "  "
+  "   Also, even though the SoCal 1 arcsec extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 arcsec coverage does go further south and west.  "
+  "   "
+  
   if(!any(installed.packages()[,1] %in% "devtools"))
      install.packages("devtools")
   if(!any(installed.packages()[,1] %in% "JRWToolBox"))
