@@ -1,5 +1,5 @@
 
-depthMeters <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
+depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE) {
   "  "
   "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
