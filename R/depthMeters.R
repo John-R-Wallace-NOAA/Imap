@@ -11,7 +11,7 @@ depthMeters <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 
   "  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html  "
   "  "
   "    Note that a long/lat point may be in a volume, but outside of the data area, in which case a zero depth is reported.  "
-  "    Here is an example: (Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F))   "
+  "    Here is an example: (Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F))    "
   "  "
   if(!any(installed.packages()[,1] %in% "devtools"))
      install.packages("devtools")
