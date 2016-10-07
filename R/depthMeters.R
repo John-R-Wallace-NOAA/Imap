@@ -33,16 +33,23 @@ depthMeters <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 
     minLat <- Lat - blockSizeDegs/2
     maxLat <- Lat + blockSizeDegs/2
 
-   if(Long > -123 & Long < -115.999999944 & Lat > 30.99972218222 & Lat < 36.99972223022 & SoCal_1as) 
+   if(Long > -123 & Long < -115.999999944 & Lat > 30.99972218222 & Lat < 36.99972223022 & SoCal_1as) {
 
       URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=socal_1as.tif&", 
              "request=getcoverage&version=1.0.0&service=wcs&", "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&",
              "resx=0.000277777780000&resy=0.000277777780000&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
-    else
+      if(!quiet) 
+        cat("\nUsing the SoCal 1 arcsec grid at (", LongLat[1], ", ", LongLat[2], ") the grid cell would be ", gdist(LongLat[1], LongLat[2], LongLat[1] + 1/3600, LongLat[2], units = 'm'), 
+           " meters long going east to west, and ", gdist(LongLat[1], LongLat[2], LongLat[1], LongLat[2] + 1/3600, units = 'm'), " meters high going south to north.\n\n", sep="")
+     } else {
 
        URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=crm.tif&",
              "request=getcoverage&version=1.0.0&service=wcs&", "coverage=crm&CRS=EPSG:4326&format=geotiff&",
              "resx=0.000833333333333334&resy=0.000833333333333334&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
+      if(!quiet) 
+         cat("\nUsing the US West Coast 3 arcsec grid at (", LongLat[1], ", ", LongLat[2], ") the grid cell would be ", gdist(LongLat[1], LongLat[2], LongLat[1] + 3/3600, LongLat[2], units = 'm'), 
+            " meters long going east to west, and ", gdist(LongLat[1], LongLat[2], LongLat[1], LongLat[2] + 3/3600, units = 'm'), " meters high going south to north.\n\n", sep="")
+     }
 
     Fname <- "TMP.tif"
   
