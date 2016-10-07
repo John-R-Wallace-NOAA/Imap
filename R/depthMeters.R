@@ -11,10 +11,10 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   "  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html  "
   "  "
   "  "
-  require(JRWToolBox) 
-  " Load into R with: devtools::install_github('John-R-Wallace/R-ToolBox')  "
-  require(Imap) 
-  " Load into R with: devtools::install_github('John-R-Wallace/Imap')  "
+  if(!any(installed.packages()[,1] %in% "devtools"))
+     install.packages("devtools")
+  if(!any(installed.packages()[,1] %in% "JRWToolBox"))
+       devtools::install_github('John-R-Wallace/R-ToolBox')
  
   JRWToolBox::lib(rgdal) 
   JRWToolBox::lib(raster)
@@ -49,7 +49,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
 
     if(plot) {
       plot(BathySmall)
-      ilines(world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
+      Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
       
     }
@@ -64,7 +64,7 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   N <- nrow(LongLat)
   for( i in 1:N) {
     if(N >= 5)
-       bar(i, N)
+       JRWToolBox::bar(i, N)
     try(Out[i] <- DepthM(LongLat[i, , drop=FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, quiet = quiet), silent = TRUE)
   }
 
