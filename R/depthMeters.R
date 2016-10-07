@@ -1,6 +1,6 @@
 
-depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-                         SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1) {
+depthMeters <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
+   SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE) {
   "  "
   "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
   "  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE  "
@@ -10,6 +10,8 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
   "  Using Coastal Relief Mapping project that has(3 arc-sec) bathymetry for most of the US coastline and 1 arc-sec for Southern CA.  " 
   "  U.S. Coastal Relief Model Map is here:  http://www.ngdc.noaa.gov/mgg/coastal/crm.html  "
   "  "
+  "    Note that a long/lat point may be in a volume, but outside of the data area, in which case a zero depth is reported.  "
+  "    Here is an example: (Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01), Zero.to.NA = F)  "
   "  "
   if(!any(installed.packages()[,1] %in% "devtools"))
      install.packages("devtools")
@@ -67,7 +69,10 @@ depthMeters  <- function(LongLat, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as,
        JRWToolBox::bar(i, N)
     try(Out[i] <- DepthM(LongLat[i, , drop=FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, quiet = quiet), silent = TRUE)
   }
-
+  if(any(Out %in% 0.00) & Zero.to.NA) {
+     Out[Out %in% 0.00] <- NA
+     warning("Depths equal to exactly zero were converted to NA.", call. = FALSE)
+  }
   Out
 }
 
