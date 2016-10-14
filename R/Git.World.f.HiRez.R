@@ -15,7 +15,7 @@ Git.World.f.HiRez <- function() {
    assign("world.f.land", rbind(world.f.land.A, world.f.land.B), pos = 1)
    remove(world.f.land.A, world.f.land.B, pos = 1)
    
-   file.remove("world.f.land.A.RData", "world.f.land.B.RData", "world.f.borders.lakes.rivers.Rdata")
+   file.remove("world.f.land.A.RData", "world.f.land.B.RData", "world.f.borders.lakes.rivers.RData")
 
    base::ls(pattern = 'world', pos = 1)
 }
