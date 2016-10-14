@@ -9,7 +9,7 @@ Git.World.f.HiRez <- function() {
 
    base::load("world.f.land.A.RData")
    base::load("world.f.land.B.RData")
-   base::load("world.f.borders.lakes.rivers.Rdata")
+   base::load("world.f.borders.lakes.rivers.RData")
 
   
    assign("world.f.land", rbind(world.f.land.A, world.f.land.B), pos = 1)
