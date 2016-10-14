@@ -7,9 +7,9 @@ Git.World.f.HiRez <- function() {
    download.file("https://cdn.rawgit.com/John-R-Wallace/GSHHG_High_Rez_for_R/master/world.f.land.B.RData", "world.f.land.B.RData")
    download.file("https://cdn.rawgit.com/John-R-Wallace/GSHHG_High_Rez_for_R/master/world.f.borders.lakes.rivers.RData", "world.f.borders.lakes.rivers.RData")
 
-   load("world.f.land.A.RData")
-   load("world.f.land.B.RData")
-   load("world.f.borders.lakes.rivers.Rdata")
+   base::load("world.f.land.A.RData")
+   base::load("world.f.land.B.RData")
+   base::load("world.f.borders.lakes.rivers.Rdata")
 
   
    assign("world.f.land", rbind(world.f.land.A, world.f.land.B), pos = 1)
