@@ -1,31 +1,23 @@
-\name{gdist}
-\alias{gdist}
-\alias{gdist.total}
+\name{depthMeters}
+\alias{depthMeters}
 \title{
-Geodesic distance (great circle distance) between points
+Depth in meters off the West Coast of the contiguous U.S.
 }
 \description{
-gdist() gives the geodesic distance between two points specified by latitude/longitude using Vincenty inverse formula for ellipsoids. 
-The distance is given in nautical miles (the default), meters, kilometers, or miles. gdist.total() applies gdist() to any number 
-of line segments.
+depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model
+
 }
 \usage{
-gdist(lon.1, lat.1, lon.2, lat.2, units = "nm", a = 6378137.0, b = 6356752.3142, verbose = FALSE)
-
-gdist.total(longlat, units = "nm", segments = TRUE, digits = 2)
+depthMeters(LongLat = c(-120.0, 33.0))
 }
 \arguments{
-  \item{lon.1}{
-Longitude of the first point.
+  \item{LongLat}{
+A single long/lat point or a matrix or data frame with longitude in the first column and latitude in the second column.
 }
-  \item{lat.1}{
-Latitude of the first point.
-}
-  \item{lon.2}{
-Longitude of the second point.
-}
-  \item{lat.2}{
-Latitude of the second point.
+  \item{blockSizeDegs}{
+The block size, in degrees, of bathymeter over which the depth is extracted.  
+The default is 0.5 degrees for volume 6 covering southern California and 2 degrees for volume 7 
+covering northern California to the U.S. - Canadian border.
 }
   \item{units}{
 Any one of "nm": nautical miles (the default), "m": meters, "km": kilometers, or "miles": miles, for units of the returned value.
