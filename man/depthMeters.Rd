@@ -5,7 +5,6 @@ Depth in meters off the West Coast of the contiguous U.S.
 }
 \description{
 depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model
-
 }
 \usage{
 depthMeters(LongLat = c(-120.0, 33.0))
