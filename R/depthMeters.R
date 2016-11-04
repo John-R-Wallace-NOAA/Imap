@@ -21,7 +21,7 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
        devtools::install_github('John-R-Wallace/R-ToolBox')
  
   JRWToolBox::lib(rgdal) 
-  JRWToolBox::lib(raster)
+  # JRWToolBox::lib(raster)
 
   DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
  
@@ -39,24 +39,26 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
              "request=getcoverage&version=1.0.0&service=wcs&", "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&",
              "resx=0.000277777780000&resy=0.000277777780000&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
       if(!quiet) 
-        cat("\n*** Using the SoCal 1 arcsec grid at (", Long, ", ", Lat, ") the grid cell would be ", Imap::gdist(Long, Lat, Long + 1/3600, Lat, units = 'm'), 
-           " meters long going east to west, and ", Imap::gdist(Long, Lat, Long, Lat + 1/3600, units = 'm'), " meters high going south to north. ***\n\n", sep="") 
+        cat("\n*** Using the SoCal 1 arcsec grid at (", Long, ", ", Lat, ") the grid cell will extend ", 
+            Imap::gdist(Long, Lat, Long + 1/3600, Lat, units = 'm'), " meters long going east to west, and ",
+            Imap::gdist(Long, Lat, Long, Lat + 1/3600, units = 'm'), " meters going south to north. ***\n\n", sep="") 
      } else {
 
        URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=crm.tif&",
              "request=getcoverage&version=1.0.0&service=wcs&", "coverage=crm&CRS=EPSG:4326&format=geotiff&",
              "resx=0.000833333333333334&resy=0.000833333333333334&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
       if(!quiet) 
-        cat("\n*** Using the US West Coast 3 arcsec grid at (", Long, ", ", Lat, ") the grid cell would be ", Imap::gdist(Long, Lat, Long + 3/3600, Lat, units = 'm'), 
-            " meters long going east to west, and ", Imap::gdist(Long, Lat, Long, Lat + 3/3600, units = 'm'), " meters high going south to north. ***\n\n", sep="") 
+        cat("\n*** Using the US West Coast 3 arcsec grid at (", Long, ", ", Lat, ") the grid cell will extend ", 
+            Imap::gdist(Long, Lat, Long + 3/3600, Lat, units = 'm'), " meters long going east to west, and ", 
+            Imap::gdist(Long, Lat, Long, Lat + 3/3600, units = 'm'), " meters going south to north. ***\n\n", sep="") 
      }
 
     Fname <- "TMP.tif"
   
     optUSR <- options(warn = -2)
     on.exit(options(optUSR))
-    download.file(URL, Fname, mode="wb", cacheOK=FALSE, quiet = quiet)
-    BathySmall <- raster(Fname)
+    utils::download.file(URL, Fname, mode="wb", cacheOK=FALSE, quiet = quiet)
+    BathySmall <- raster::raster(Fname)
 
     if(plot) {
       plot(BathySmall)
@@ -65,7 +67,7 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
       
     }
   
-    - extract(BathySmall, LongLat, method = method)
+    - raster::extract(BathySmall, LongLat, method = method)
   }
   
   if(is.null(nrow(LongLat)))
