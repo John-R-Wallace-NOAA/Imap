@@ -60,7 +60,7 @@ Vincenty, T.  Direct and inverse solutions of geodesics on the ellipsoid with ap
 of nested equations.  Survey Review XXII, 176, April 1975.  \url{http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf}
 }
 \author{
-John R. Wallace: \email{Imap.for.R@gmail.com} (Limited support)
+John R. Wallace: \email{John.Wallace@noaa.gov} 
 }
 \seealso{
 \code{\link{imap}}, \code{\link{draw.lines}}
