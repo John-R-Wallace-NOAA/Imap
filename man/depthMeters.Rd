@@ -56,10 +56,6 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \examples{
 \dontrun{
-LongLat <- data.frame(Long = c(-118.6442, -118.5227, -119.4888,	-119.84, -120.00), 
-                       Lat =  c(33.4817, 33.3485, 33.9634, 33.94, 33.00))
-depthMeters(LongLat)
-
 # Here is an example of the where the long/lat point is in a volume but outside of the data area: 
  Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F)
 }
