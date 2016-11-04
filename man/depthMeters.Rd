@@ -48,7 +48,8 @@ For getting the bathymetry into R, I followed Tom Wainwright here:
 U.S. Coastal Relief Model Map is here:  \url{http://www.ngdc.noaa.gov/mgg/coastal/crm.html}
 }
 \author{
-John R. Wallace: \email John.Wallace@noaa.gov}
+John R. Wallace: \email{John.Wallace@noaa.gov}
+
 }
 \seealso{
 \code{\link{imap}}, \code{\link{raster}}
