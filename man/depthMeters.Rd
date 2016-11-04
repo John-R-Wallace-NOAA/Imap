@@ -4,20 +4,24 @@
 Depth in meters off the West Coast of the contiguous U.S.
 }
 \description{
-depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. NOte that, even though
-the SoCal 1 Arc-Second extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage does go further 
+depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. Note that, even though
+the SoCal 1 Arc-Second extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage goes further 
 south and west.
 }
 \usage{
-depthMeters(c(-125.6875, 48.14417)) 
+depthMeters(c(-118.6442, 33.4817))
+
+LongLat <- data.frame(Long = c(-118.6442, -118.5227, -119.4888,	-119.84, -120.00), 
+                       Lat =  c(33.4817, 33.3485, 33.9634, 33.94, 33.00))
+depthMeters(LongLat)
 }
 \arguments{
   \item{LongLat}{
-A single long/lat point or a matrix or data frame with longitude in the first column and latitude in the second column.
+A single long/lat vector or a matrix or data frame with longitude in the first column and latitude in the second column.
 }
   \item{blockSizeDegs}{
-The block size, in degrees, of bathymetry over which the depth is extracted.  
-The default is 0.5 degrees for the 1 Arc-Second volume 6 covering southern California and 2 degrees for 
+The block size, in degrees, over which the depth is extracted.  
+The default is 0.5 degrees on a side for the 1 Arc-Second volume 6 covering southern California and 2 degrees for 
 the 3 Arc-Second volume 7 covering the entire West Coast of the contigous U.S.
 }
   \item{SoCal_1as}{
@@ -27,14 +31,14 @@ Should 1 Arc-Second volume 6 be used. The default is TRUE.
 Method used to extract the depth from a Raster object using the extract() funcion in the 'raster' package. Defaults to 'bilinear'.
 }
   \item{plot}{
-Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is true when the
-number of depths wanted is less than 5 and FALSE otherwise.
+Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is TRUE when the
+number of depths asked for is less than 5 and FALSE otherwise.
 }
   \item{quiet}{
 Should addition information be surpressed. Defaults to the logical negation of the 'plot' augument.
 }
   \item{Zero.to.NA}{
-When a long/lat point is in a volume but outside of an area which contains data a zero is extracted. Should these zeros
+When a long/lat point is in a volume, but outside of an area which contains data, an exact zero is extracted. Should these zeros
 be converted into NA's.  The default is TRUE.
 }
 }
@@ -52,7 +56,7 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 
 }
 \seealso{
-\code{\link{imap}}, \code{\link{raster}}
+\code{\link{raster}}
 }
 \examples{
 \dontrun{
