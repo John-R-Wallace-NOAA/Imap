@@ -4,10 +4,12 @@
 Depth in meters off the West Coast of the contiguous U.S.
 }
 \description{
-depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model.
+depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. NOte that, even though
+the SoCal 1 Arc-Second extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage does go further 
+south and west.
 }
 \usage{
-depthMeters(LongLat = c(-120.0, 33.0))
+depthMeters(c(-125.6875, 48.14417)) 
 }
 \arguments{
   \item{LongLat}{
@@ -28,48 +30,33 @@ Method used to extract the depth from a Raster object using the extract() funcio
 Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is true when the
 number of depths wanted is less than 5 and FALSE otherwise.
 }
-  \item{verbose}{
-Should extra information be output, the default is FALSE.
+  \item{quiet}{
+Should addition information be surpressed. Defaults to the logical negation of the 'plot' augument.
 }
-  \item{longlat}{
-Two dimensional (n x 2) data in the form of a matrix or dataframe. The first column should be the longitude or x-axis column and the second
-the latitude or y-axis column.
-}
-  \item{segments}{
-When there are more than two or more segments, should the distance for each segment be output. The default is TRUE.
-}
-  \item{digits}{
-The number of rounding digits to use in the segment output. The default is 2.
+  \item{Zero.to.NA}{
+When a long/lat point is in a volume but outside of an area which contains data a zero is extracted. Should these zeros
+be converted into NA's.  The default is TRUE.
 }
 }
 \value{
-The total geodesic distance in the units specified.
+The depth in meters of the point(s) given.
 }
 \references{
-Inspired by:  \url{http://www.movable-type.co.uk/scripts/LatLongVincenty.html}
+For getting the bathymetry into R, I followed Tom Wainwright here: 
+\url{http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1}
 
-Vincenty, T.  Direct and inverse solutions of geodesics on the ellipsoid with application 
-of nested equations.  Survey Review XXII, 176, April 1975.  \url{http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf}
+U.S. Coastal Relief Model Map is here:  \url{http://www.ngdc.noaa.gov/mgg/coastal/crm.html}
 }
 \author{
-John R. Wallace: \email{Imap.for.R@gmail.com} (Limited support)
+John R. Wallace: \email John.Wallace@noaa.gov}
 }
 \seealso{
-\code{\link{imap}}, \code{\link{draw.lines}}
+\code{\link{imap}}, \code{\link{raster}}
 }
 \examples{
 \dontrun{
-
-imap() # Zoom into an area, right-click to stop.
-
-gdist.total(draw.lines(rainbow(10), lwd=4)) # Left-click two or more times, right-click to stop.
-
-# The total distance of the polygon's perimeter:
-gdist.total(draw.polygon())  # Left-click three or more times, right-click to stop.
-
-# The total distance of contiguous points (those not separated by NA's).
-gdist.total(select.pts(imap()[[1]]$ll)) # Zoom in to an area, right-click, and then select points by creating a polygon with left-clicks.
-
+# Here is an example of the where the long/lat point is in a volume but outside of the data area: 
+ Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F)
 }
 }
 
