@@ -49,7 +49,6 @@ U.S. Coastal Relief Model Map is here:  \url{http://www.ngdc.noaa.gov/mgg/coasta
 }
 \author{
 John R. Wallace: \email{John.Wallace@noaa.gov}
-
 }
 \seealso{
 \code{\link{raster}}
