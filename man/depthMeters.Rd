@@ -41,6 +41,9 @@ Should addition information be surpressed. Defaults to the logical negation of t
 When a long/lat point is in a volume, but outside of an area which contains data, an exact zero is extracted. Should these zeros
 be converted into NA's.  The default is TRUE.
 }
+  \item{GoogleEarth}{
+Show the raster image (converted to KML format) in Google Earth.  The default is FALSE.
+}
 }
 \value{
 The depth in meters of the point(s) given.
@@ -59,6 +62,14 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \examples{
 \dontrun{
+
+# Compare the difference in fine resolution when the block size is decreased. 
+ depthMeters(c(-118.6439, 33.4808), blockSizeDegs = 0.5) 
+ depthMeters(c(-118.6439, 33.4808), blockSizeDegs = 0.005)
+
+# Look at the image in Google Earth
+ depthMeters(c(-118.6439, 33.4808), blockSizeDegs = 0.005, Google = T)
+  
 # Here is an example of the where the long/lat point is in a volume but outside of the data area: 
  Imap::depthMeters(rbind(c(0, 0), c(-120, 33), c(-135, 41)), 0.01, Zero.to.NA = F)
 }
