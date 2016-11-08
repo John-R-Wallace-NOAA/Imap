@@ -1,6 +1,7 @@
 
 depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-   SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE) {
+   SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE,
+   GoogleEarth = FALSE) {
   "  "
   "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
   "  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE  "
@@ -20,8 +21,11 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
   if(!any(installed.packages()[,1] %in% "JRWToolBox"))
        devtools::install_github('John-R-Wallace/R-ToolBox')
  
-  JRWToolBox::lib(rgdal) 
-  # JRWToolBox::lib(raster)
+  # JRWToolBox::lib(rgdal) 
+  JRWToolBox::lib(raster)
+  if(GoogleEarth)
+     JRWToolBox::lib(plotKML) 
+     
 
   DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
  
@@ -61,10 +65,12 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
     BathySmall <- raster::raster(Fname)
 
     if(plot) {
-      plot(BathySmall)
+      raster::plot(BathySmall)
+      raster::plot(rasterToContour(BathySmall), add=T)
       Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
-      
+      if(GoogleEarth)
+        plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
     }
   
     - raster::extract(BathySmall, LongLat, method = method)
