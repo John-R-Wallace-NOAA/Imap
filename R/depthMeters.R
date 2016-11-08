@@ -66,7 +66,7 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
 
     if(plot) {
       raster::plot(BathySmall)
-      raster::plot(rasterToContour(BathySmall), add=T)
+      raster::contour(BathySmall, add=T)
       Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
       if(GoogleEarth)
