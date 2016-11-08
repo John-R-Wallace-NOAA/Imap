@@ -4,3 +4,5 @@ Interactive mapping in R
 Install or upgrade with:
 
     devtools::install_github("John-R-Wallace/Imap")
+
+Note that since this package is using the old style of manual files, it appears that a restarting of R needs to be done after an upgrade.
