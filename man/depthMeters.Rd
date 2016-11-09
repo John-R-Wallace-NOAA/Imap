@@ -11,7 +11,7 @@ south and west.
 \usage{
 function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
     SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, 
-    Zero.to.NA = TRUE, GoogleEarth = FALSE)  
+    Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE)  
 }
 \arguments{
   \item{LongLat}{
@@ -41,6 +41,9 @@ be converted into NA's.  The default is TRUE.
 }
   \item{GoogleEarth}{
 Show the raster image (converted to KML format) in Google Earth.  The default is FALSE.
+}
+   \item{plot3D}{
+Plot a 3D cloud of color banded points using the 'rgl' package.
 }
 }
 \value{
