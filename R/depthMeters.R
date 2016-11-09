@@ -69,10 +69,10 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
     utils::download.file(URL, Fname, mode="wb", cacheOK=FALSE, quiet = quiet)
     BathySmall <- raster::raster(Fname)
     if(plot3D) {
-           Fname.xyz <- "TMP_xyz.tif"
-           utils::download.file(URL.xyz, Fname.xyz, mode = "wb", cacheOK = FALSE, quiet = quiet)
-           BathySmall.xyz <- read.table(Fname.xyz, head=F)
-           names(BathySmall.xyz) <- c('Longitude', 'Latitude', 'Elevation')
+        Fname.xyz <- "TMP_xyz.tif"
+        utils::download.file(URL.xyz, Fname.xyz, mode = "wb", cacheOK = FALSE, quiet = quiet)
+        BathySmall.xyz <- read.table(Fname.xyz, head=F)
+        names(BathySmall.xyz) <- c('Longitude', 'Latitude', 'Elevation')
     }
 
     if(plot) {
@@ -81,7 +81,10 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
       Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
       if(plot3D)
-        rgl::plot3d(BathySmall.xyz, col=rev(terrain.colors(nrow(BathySmall.xyz))))
+          BathySmall.xyz$Splits <- factor.f( BathySmall.xyz$Elevation, (max(BathySmall.xyz$Elevation, na.rm=T) - min(BathySmall.xyz$Elevation, na.rm=T))/254)
+          colTable <- data.frame(Splits = levels(BathySmall.xyz$Splits), Color = rev(terrain.colors(255)))
+          BathySmall.xyz <- match.f(BathySmall.xyz, colTable, "Splits", "Splits", "Color")
+          plot3d(BathySmall.xyz, col = BathySmall.xyz$Color)
       if(GoogleEarth)
         plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
     }
