@@ -1,7 +1,7 @@
 
 depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE,
-   GoogleEarth = FALSE) {
+   plot3D = FALSE, GoogleEarth = FALSE) {
   "  "
   "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
   "  Example of SoCal 1 arcsec: depthMeters(c(-120, 33))  # Auto uses Southern Cali 1 arc-sec unless SoCal_1as = FALSE  "
@@ -24,7 +24,9 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
   # JRWToolBox::lib(rgdal) 
   JRWToolBox::lib(raster)
   if(GoogleEarth)
-     JRWToolBox::lib(plotKML) 
+     JRWToolBox::lib(plotKML)
+  if(plot3D)
+     JRWToolBox::lib(rgl)
      
 
   DepthM <- function(LongLat, blockSizeDegs = 0.01, method = 'bilinear', plot = TRUE, quiet = TRUE) {
@@ -42,6 +44,10 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
       URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=socal_1as.tif&", 
              "request=getcoverage&version=1.0.0&service=wcs&", "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&",
              "resx=0.000277777780000&resy=0.000277777780000&bbox=",minLon, ",", minLat, ",", maxLon, ",", maxLat, sep="")
+      if(plot3D)
+          URL.xyz <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", "wcs.groovy?filename=socal_1as.xyz&", 
+             "request=getcoverage&version=1.0.0&service=wcs&", "coverage=socal_1as&CRS=EPSG:4326&format=xyz&", 
+             "resx=0.000277777780000&resy=0.000277777780000&bbox=", minLon, ",", minLat, ",", maxLon, ",", maxLat, sep = "")
       if(!quiet) 
         cat("\n*** Using the SoCal 1 arcsec grid at (", Long, ", ", Lat, ") the grid cell will extend ", 
             Imap::gdist(Long, Lat, Long + 1/3600, Lat, units = 'm'), " meters long going east to west, and ",
@@ -58,17 +64,24 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
      }
 
     Fname <- "TMP.tif"
-  
     optUSR <- options(warn = -2)
     on.exit(options(optUSR))
     utils::download.file(URL, Fname, mode="wb", cacheOK=FALSE, quiet = quiet)
     BathySmall <- raster::raster(Fname)
+    if(plot3D) {
+           Fname.xyz <- "TMP_xyz.tif"
+           utils::download.file(URL.xyz, Fname.xyz, mode = "wb", cacheOK = FALSE, quiet = quiet)
+           BathySmall.xyz <- read.table(Fname.xyz, head=F)
+           names(BathySmall.xyz) <- c('Longitude', 'Latitude', 'Elevation')
+    }
 
     if(plot) {
       raster::plot(BathySmall)
       raster::contour(BathySmall, add=T)
       Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
+      if(plot3D)
+        rgl::plot3d(BathySmall.xyz, col=(terrain.colors(1000)))
       if(GoogleEarth)
         plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
     }
