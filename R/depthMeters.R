@@ -81,7 +81,7 @@ depthMeters <- function(LongLat = c(-120, 33) , blockSizeDegs = ifelse(plot, ife
       Imap::ilines(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
       points(LongLat, col ='red', pch = 16)
       if(plot3D)
-        rgl::plot3d(BathySmall.xyz, col=rev(terrain.colors(nrow(BathySmall.xyz)))))
+        rgl::plot3d(BathySmall.xyz, col=rev(terrain.colors(nrow(BathySmall.xyz))))
       if(GoogleEarth)
         plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
     }
