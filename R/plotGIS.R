@@ -1,12 +1,18 @@
-plotGIS <- function (LongLat = c(-120, 33), Polygons.List = NULL, longrange =c(-128, -122), latrange = c(41.5, 50), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE,  
-              alpha = 1, col.pts = 'red', col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, ...) {
+plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE,  
+              alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25, col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
  
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
         devtools::install_github("John-R-Wallace/R-ToolBox")
     JRWToolBox::lib(raster)
-   
+
+    if(is.null(LongLat)) {
+       plotPoints <- FALSE
+       LongLat <- c(mean(longrange), mean(latrange))
+    } else
+        plotPoints = TRUE
+    
     if (is.null(nrow(LongLat))) 
          LongLat <- as.data.frame(t(LongLat))
   
@@ -43,11 +49,12 @@ plotGIS <- function (LongLat = c(-120, 33), Polygons.List = NULL, longrange =c(-
     }
     BathySmall <- raster::raster(Fname)
     raster::plot(BathySmall, alpha = alpha)
-    raster::contour(BathySmall, maxpixels = 500000, add = T, ...)
+    raster::contour(BathySmall, maxpixels = 500000, add = T, levels = levels.contour, ...)
 
     Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon) , latrange = c(minLat, maxLat), add = T, zoom = F)
 
-    points(LongLat[LongLat$X >= longrange[1] & LongLat$X <= longrange[2] & LongLat$Y >= latrange[1] &  LongLat$Y <= latrange[2],], col = col.pts, pch = 16, cex = 0.25)
+    if(plotPoints)
+        points(LongLat[LongLat[,1] >= minLon & LongLat[,1] <= maxLon & LongLat[,2] >= minLat &  LongLat[,2] <= maxLat,], col = col.pts, pch = pch.pts, cex = cex.pts)
 
     if(!is.null(Polygons)) {
 
@@ -56,5 +63,3 @@ plotGIS <- function (LongLat = c(-120, 33), Polygons.List = NULL, longrange =c(-
     }
 
 }
-
-
