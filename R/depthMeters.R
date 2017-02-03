@@ -1,5 +1,5 @@
 depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE, 
+    SoCal_1as = TRUE, method = "bilinear", buffer = NULL, plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE, 
     plot3D = FALSE, GoogleEarth = FALSE) 
 {
     "  "
@@ -24,8 +24,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         JRWToolBox::lib(plotKML)
     if (plot3D) 
         JRWToolBox::lib(rgl)
-    DepthM <- function(LongLat, blockSizeDegs = 0.01, method = "bilinear", 
-        plot = TRUE, quiet = TRUE) {
+    DepthM <- function(LongLat, blockSizeDegs = 0.01, method = "bilinear", buffer = buffer, plot = TRUE, quiet = TRUE) {
         Long <- as.numeric(LongLat[1])
         Lat <- as.numeric(LongLat[2])
         minLon <- Long - blockSizeDegs/2
@@ -108,10 +107,17 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         }
         if (GoogleEarth) 
                 plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
-        ' '    
-        -raster::extract(BathySmall, LongLat, method = method)
+        ' ' 
+        Out <- raster::extract(BathySmall, LongLat, method = method, buffer = buffer)[[1]]
+        if(length(Out) > 1) {
+               cat("\nWith a buffer radius of", buffer, "meters, there are", length(Out[!is.na(Out)]), "non-mising cell values.\n\n")
+               flush.console()
+        }
+        -mean(Out, na.rm = T)
     }
-    '# End DepthM function'
+    ' '
+    ' ### Start of main section ### '
+    ' '
     if (is.null(nrow(LongLat))) 
         LongLat <- as.data.frame(t(LongLat))
     N <- nrow(LongLat)
@@ -120,7 +126,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         if (N >= 5) 
             JRWToolBox::bar(i, N)
         try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], blockSizeDegs = blockSizeDegs, 
-            method = method, plot = plot, quiet = quiet), silent = TRUE)
+            method = method, buffer = buffer, plot = plot, quiet = quiet), silent = TRUE)
     }
     if (any(Out %in% 0) & Zero.to.NA) {
         Out[Out %in% 0] <- NA
