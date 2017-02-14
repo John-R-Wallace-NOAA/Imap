@@ -1,11 +1,3 @@
-# Plot a bathymetric figure for the West Coast of the contiguous U.S.
-#
-# \code{plotGIS} creates a GIS bathymetric figure off the coasts of Washinton, Oregon, and California using data from the U.S. Coastal Relief Model Map. 
-#
-# @param LongLat two dimensional user supplied data in the form of a matrix or data frame. The first column should be the longitude or x-axis column and the second the latitude or y-axis column. 
-
-# @export
-
 
 plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE,  
               alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25, col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
