@@ -1,4 +1,3 @@
-
 plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE,  
               alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25, col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
  
