@@ -87,6 +87,9 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \seealso{
 \code{\link{depthMeters}}, \code{\link{draw.polygon}} 
+This function uses the double colon operator for access to the \code{raster} function 
+[\code{raster::raster(...)}].  Therefore to see the help for \code{raster()}, either load the package 
+or use: \code{?raster::raster}
 }
 \examples{
 \dontrun{
