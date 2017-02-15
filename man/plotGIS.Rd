@@ -29,22 +29,22 @@ Latitudinal range of the figure to be plotted.
 Should 1 Arc-Second volume 6 be used (see the references). The default is TRUE.
 }
   \item{method}{
-Method used to extract the depth from a Raster object using the extract() funcion in the 'raster' package. Defaults to 'bilinear'.
+Method used to extract the depth from a Raster object using the \code{extract} funcion in the \code{raster} package. Defaults to 'bilinear'.
 }
   \item{quiet}{
-Should the function download.file() from the 'utils' package be quiet when downloading the bathymetry data, the default is TRUE.
+Should the function \code{download.file} from the 'utils' package be quiet when downloading the bathymetry data, the default is TRUE.
 }
   \item{imap}{
-Should the imap() function be used for a land overlay. Default is TRUE.
+Should the \code{imap} function be used for a land overlay. Default is TRUE.
 }
   \item{alpha}{
-Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1) Passed to the plot() function in the 'Raster' package.
+Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1). Passed to the \code{plot} function in the \code{Raster} package.
 }
   \item{col.pts}{
 Color of the LongLat points to be plotted. The default is red.
 }
   \item{pch.pts}{
-Type of LongLat point to plotted, see the help for points().
+Type of LongLat point to plotted, see the help for \code{points}.
 }
   \item{cex.pts}{
 Size of Longlat point to be plotted.
@@ -57,7 +57,7 @@ Line width of the polygons in the Polygons.List to be plotted. The default is 1.
 }
    \item{Fname}{
 Name of a special graphics TIF file to use for plotting. The default is NULL which will download a new TIF file with the Long/Lat ranges given by 'longrange' and 'latrange'. 
-The name of the downloaded TIF file is 'TMP.fif' and is saved in working directory [getwd()].
+The name of the downloaded TIF file is 'TMP.fif' and is saved in working directory \code{getwd}.
 }
    \item{levels.contour}{
 The levels, in meters, of the contour lines to plot.
