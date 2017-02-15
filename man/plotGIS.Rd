@@ -17,7 +17,7 @@ Optional Long/Lat data to be plotted. Longlat should be a two dimensional user s
 The first column should be the longitude or x-axis column and the second the latitude or y-axis column. 
 }
   \item{Polygons.List}{
-Optional list with polygon data to be plotted.
+Optional list with polygon data to be plotted within each elemnet of the list using the \code{lines} function.
 }
   \item{longrange}{
 Longitudinal range of the figure to be plotted.
@@ -26,13 +26,14 @@ Longitudinal range of the figure to be plotted.
 Latitudinal range of the figure to be plotted.
 }
   \item{SoCal_1as}{
-Should 1 Arc-Second volume 6 be used (see the references). The default is TRUE.
+Should 1 Arc-Second volume 6 (see the references) be used when possible. The default is TRUE.
 }
   \item{method}{
 Method used to extract the depth from a Raster object using the \code{extract} funcion in the \code{raster} package. Defaults to 'bilinear'.
 }
   \item{quiet}{
-Should the function \code{download.file} from the \code{utils} package be quiet when downloading the bathymetry data, the default is TRUE.
+Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data, 
+the default is TRUE.
 }
   \item{imap}{
 Should the \code{imap} function be used for a land overlay. Default is TRUE.
@@ -50,7 +51,7 @@ Type of LongLat point to plotted, see the help for \code{points}.
 Size of Longlat point to be plotted.
 }
    \item{col.poly}{
-Color of the polygons in the Polygons.List to be plotted. The default is blue.
+Color of the polygon lines in the Polygons.List to be plotted. The default is blue.
 }
    \item{lwd.poly}{
 Line width of the polygons in the Polygons.List to be plotted. The default is 1.5.
