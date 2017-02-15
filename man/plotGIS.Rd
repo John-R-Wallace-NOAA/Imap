@@ -93,7 +93,7 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
   temp.poly <- list(data.frame(x= c( -125, -125, -124.6, -124.6, -125), y = c(42.2, 42, 42, 42.2, 42.2)), 
                     data.frame(x= c( -124.8, -124.8, -124.4, -124.4, -124.8), y = c(42.1, 41.9, 41.9, 42.1, 42.1)))
 
-   plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('green', 0.5)), border.poly='black', lwd.poly=2)
+   plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
    draw.polygon('green') # Interactively draw a polygon filled with green
 
    # Compare Southern CA 1 arc-sec to 3 arc-sec data
