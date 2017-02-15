@@ -4,7 +4,7 @@
 Depth in meters off the West Coast of the contiguous U.S.
 }
 \description{
-depthMeters() gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. Note that, even though
+\code{depthMeters} gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. Note that, even though
 the SoCal 1 Arc-Second extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage goes further 
 south and west.
 }
@@ -26,7 +26,8 @@ the 3 Arc-Second volume 7 covering the entire West Coast of the contigous U.S.
 Should 1 Arc-Second volume 6 be used. The default is TRUE.
 }
   \item{method}{
-Method used to extract the depth from a Raster object using the extract() funcion in the 'raster' package. Defaults to 'bilinear'.
+Method used to extract the depth from a Raster object using the \code{extract} function in the \code{raster} package. 
+Defaults to 'bilinear'.
 }
   \item{plot}{
 Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is TRUE when the
