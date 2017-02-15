@@ -14,9 +14,10 @@ GSHHS - A Global Self-consistent, Hierarchical, High-resolution Shoreline Databa
 }
 \description{
 Both the high and full resolutions of GSHHS have been converted for use in R.  The high resolution of GSHHS is provided
-with the Imap package, the full resolution is available from GitHub using the \code{Git.World.f.HiRez.R} function. :
+with the Imap package, the full resolution is available from GitHub and can be downloaded to your global environment 
+using the \code{Git.World.f.HiRez} function:
 
-> Git.World.f.HiRez.R()						
+> Git.World.f.HiRez()						
 
 The full resolution may not work well on low-end computers. Start with 'ilines(world.f.land)' if there is a problem.
 Occasionally starting over with graphics.off() or using gc() for garbage collection may also help.
