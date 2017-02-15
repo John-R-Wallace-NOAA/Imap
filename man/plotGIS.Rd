@@ -9,9 +9,9 @@ Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. 
 }
 \usage{
 function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
-method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
-col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
-levels.contour = seq(0, -2000, by = -100), ...)  
+        method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+        col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
+        levels.contour = seq(0, -2000, by = -100), ...)  
 }
 \arguments{
   \item{LongLat}{
@@ -65,7 +65,7 @@ Line width of the polygons in the 'polygons' list to be plotted. The default is 
    \item{Fname}{
 Name of a special graphics TIF file to use for plotting. The default is NULL which will download a new TIF file with the 
 Long/Lat ranges given by 'longrange' and 'latrange'. The name of the downloaded TIF file is 'TMP.tif' and is saved in 
-working directory \code{getwd}. Using a previously downloaded TIF will save download time and allow work offline but with 
+working directory [\code{getwd()}]. Using a previously downloaded TIF will save download time and allow work offline but with 
 a reasonable internet connection is rarely needed.
 }
    \item{levels.contour}{
