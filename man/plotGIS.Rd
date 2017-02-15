@@ -8,15 +8,17 @@ Plot a bathymetric figure off the West Coast of the contiguous U.S.
 Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 Arc-Second coverage goes further south and west.
 }
 \usage{
-function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE, imap = TRUE, 
-alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = "blue", lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, by = -100), ...)  
+function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
+method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
+levels.contour = seq(0, -2000, by = -100), ...)  
 }
 \arguments{
   \item{LongLat}{
 Optional Long/Lat data to be plotted. Longlat should be a two dimensional user supplied data in the form of a matrix or data frame. 
 The first column should be the longitude or x-axis column and the second the latitude or y-axis column. 
 }
-  \item{Polygons.List}{
+  \item{polygons}{
 Optional list with polygon data to be plotted within each elemnet of the list using the \code{lines} function.
 }
   \item{longrange}{
@@ -51,10 +53,14 @@ Type of LongLat point to plotted, see the help for \code{points}.
 Size of Longlat point to be plotted.
 }
    \item{col.poly}{
-Color of the polygon lines in the Polygons.List to be plotted. The default is blue.
+Colors of the polygon fill in the 'polygons' list to be plotted. The default is blue with an alpha level of 0.5. 
+The colors will be repeated as needed.
+}
+   \item{border.poly}{
+Color of the polygon border in the 'polygons' list to be plotted.
 }
    \item{lwd.poly}{
-Line width of the polygons in the Polygons.List to be plotted. The default is 1.5.
+Line width of the polygons in the 'polygons' list to be plotted. The default is 1.5.
 }
    \item{Fname}{
 Name of a special graphics TIF file to use for plotting. The default is NULL which will download a new TIF file with the Long/Lat ranges given by 'longrange' and 'latrange'. 
@@ -83,6 +89,11 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 \examples{
 \dontrun{
    plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
+   
+   temp.poly <- list(data.frame(x= c( -124.98, -124.98, -124.69, -124.69, -124.967, -124.98), 
+                     y = c(42.163, 41.95, 41.95, 42.18, 42.18, 42.163)))
+   plotGIS(polygons = temp.poly, border.poly='black', lwd.poly=2)
+   draw.polygon('green') # Interactively draw a polygon filled with green
 
    # Compare Southern CA 1 arc-sec to 3 arc-sec data
    plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
