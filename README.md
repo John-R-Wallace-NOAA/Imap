@@ -7,6 +7,6 @@ Install or upgrade with:
     
     devtools::install_github("John-R-Wallace/Imap")
 ```diff 
-- After upgrading, restarting R may be needed before the help pages will work (the Imap.rdb is not actually corrupt).
+- After upgrading, restarting R may be needed before the help pages will work (the Imap.rdb is not corrupt).
 ```
 
