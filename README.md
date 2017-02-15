@@ -7,6 +7,6 @@ Install or upgrade with:
     
     devtools::install_github("John-R-Wallace/Imap")
 ```diff
-- Note, that by using old style manual files it appears that restarting R may be needed after an upgrade.
+- Note that by using old style manual files it appears that restarting R may be needed after an upgrade.
 ```
 
