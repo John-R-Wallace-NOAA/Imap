@@ -8,7 +8,7 @@ Plot a bathymetric figure off the West Coast of the contiguous U.S.
 Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 Arc-Second coverage goes further south and west.
 }
 \usage{
-function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
+plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
         method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
         col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
         levels.contour = seq(0, -2000, by = -100), ...)  
