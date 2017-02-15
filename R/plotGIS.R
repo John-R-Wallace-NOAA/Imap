@@ -1,5 +1,6 @@
-plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE,  
-              alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25, col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
+plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE,
+                     method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25,
+                     col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
  
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
@@ -51,7 +52,8 @@ plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -
     raster::plot(BathySmall, alpha = alpha)
     raster::contour(BathySmall, maxpixels = 500000, add = T, levels = levels.contour, ...)
 
-    Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon) , latrange = c(minLat, maxLat), add = T, zoom = F)
+    if(imap)
+      Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon) , latrange = c(minLat, maxLat), add = T, zoom = F)
 
     if(plotPoints)
         points(LongLat[LongLat[,1] >= minLon & LongLat[,1] <= maxLon & LongLat[,2] >= minLat &  LongLat[,2] <= maxLat,], col = col.pts, pch = pch.pts, cex = cex.pts)
