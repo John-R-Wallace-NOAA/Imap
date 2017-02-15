@@ -4,13 +4,12 @@
 Plot a bathymetric figure off the West Coast of the contiguous U.S.
 }
 \description{
-\code{plotGIS} creates a GIS bathymetric figure off the coasts of Washington, Oregon, and California using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. Note that
-the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 Arc-Second coverage goes further south and west.
+\code{plotGIS} creates a GIS bathymetric figure off the coasts of Washington, Oregon, and California using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. 
+Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 Arc-Second coverage goes further south and west.
 }
 \usage{
 function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", quiet = TRUE, imap = TRUE, 
 alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = "blue", lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, by = -100), ...)  
-
 }
 \arguments{
   \item{LongLat}{
@@ -88,8 +87,6 @@ plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
 plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
 dev.new()
 plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), SoCal_1as=FALSE)
-
-
 }
 }
 
