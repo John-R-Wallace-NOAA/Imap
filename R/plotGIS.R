@@ -1,6 +1,6 @@
-plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE,
+plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE,
                      method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25,
-                     col.poly = 'blue', lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
+                     col.poly =  col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
  
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
@@ -58,10 +58,11 @@ plotGIS <- function (LongLat = NULL, Polygons.List = NULL, longrange = c(-126, -
     if(plotPoints)
         points(LongLat[LongLat[,1] >= minLon & LongLat[,1] <= maxLon & LongLat[,2] >= minLat &  LongLat[,2] <= maxLat,], col = col.pts, pch = pch.pts, cex = cex.pts)
 
-    if(!is.null(Polygons)) {
+    if(!is.null(polygons)) {
 
-        for ( i in 1:length(Polygons))
-                 lines(Polygons.List[[i]], col = col.poly, lwd=lwd.poly)
+        for ( i in 1:length(polygons))
+                 polygon(polygons[[i]], col = col.poly, border = border.poly, lwd=lwd.poly)
     }
 
 }
+
