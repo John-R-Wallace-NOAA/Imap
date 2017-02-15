@@ -86,7 +86,7 @@ U.S. Coastal Relief Model Map is here:  \url{http://www.ngdc.noaa.gov/mgg/coasta
 John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \seealso{
-\code{\link{depthMeters}}, \code{\link{raster::raster}} 
+\code{\link{depthMeters}}, \code{\link{draw.polygon}} 
 }
 \examples{
 \dontrun{
