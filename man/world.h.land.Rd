@@ -7,23 +7,18 @@
 \alias{world.h.rivers}
 \alias{world.h.borders}
 \alias{npacific}
+\alias{Git.World.f.HiRez.R}
 \docType{data}
 \title{
 GSHHS - A Global Self-consistent, Hierarchical, High-resolution Shoreline Database
 }
 \description{
 Both the high and full resolutions of GSHHS have been converted for use in R.  The high resolution of GSHHS is provided
-with the Imap package, the full resolution is available on the internet by using the following commands:
+with the Imap package, the full resolution is available from GitHub using the Git.World.f.HiRez.R function. :
 
-> browseURL("http://imap-for-r.googlecode.com/files/world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp")								
+> Git.World.f.HiRez.R()						
 
-> load(choose.files(getwd(), "Find and load the file world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp"))
-
-Or without choose.files(), where 'saved.path' is the path where the file was saved:
-
-> load("/saved.path/world.f.for.R.GSHHS.Ver.2.Dec.2009.dmp")
-
-The full resolution will not work well on low-end computers. Start with 'ilines(world.f.land)' if there is a problem.
+The full resolution may not work well on low-end computers. Start with 'ilines(world.f.land)' if there is a problem.
 Occasionally starting over with graphics.off() or using gc() for garbage collection may also help.
 }
 \format{
