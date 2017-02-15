@@ -63,8 +63,10 @@ Color of the polygon border in the 'polygons' list to be plotted.
 Line width of the polygons in the 'polygons' list to be plotted. The default is 1.5.
 }
    \item{Fname}{
-Name of a special graphics TIF file to use for plotting. The default is NULL which will download a new TIF file with the Long/Lat ranges given by 'longrange' and 'latrange'. 
-The name of the downloaded TIF file is 'TMP.tif' and is saved in working directory \code{getwd}.
+Name of a special graphics TIF file to use for plotting. The default is NULL which will download a new TIF file with the 
+Long/Lat ranges given by 'longrange' and 'latrange'. The name of the downloaded TIF file is 'TMP.tif' and is saved in 
+working directory \code{getwd}. Using a previously downloaded TIF will save download time and allow work offline but with 
+a reasonable internet connection is rarely needed.
 }
    \item{levels.contour}{
 The levels, in meters, of the contour lines to plot.
@@ -94,7 +96,7 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
                     data.frame(x= c( -124.8, -124.8, -124.4, -124.4, -124.8), y = c(42.1, 41.9, 41.9, 42.1, 42.1)))
 
    plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
-   draw.polygon('green') # Interactively draw a polygon filled with green
+   draw.polygon('green') # Interactively draw a polygon filled with green (the default alpha level is 0.5)
 
    # Compare Southern CA 1 arc-sec to 3 arc-sec data
    plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
