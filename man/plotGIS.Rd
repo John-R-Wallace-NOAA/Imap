@@ -81,12 +81,12 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \examples{
 \dontrun{
-plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
+   plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
 
-# Compare Southern CA 1 arc-sec to 3 arc-sec data
-plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
-dev.new()
-plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), SoCal_1as=FALSE)
+   # Compare Southern CA 1 arc-sec to 3 arc-sec data
+   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
+   dev.new()
+   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), SoCal_1as=FALSE)
 }
 }
 
