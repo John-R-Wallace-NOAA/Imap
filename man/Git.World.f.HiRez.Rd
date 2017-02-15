@@ -1,3 +1,4 @@
+\alias{Git.World.f.HiRez.R}
 \name{world}
 \alias{world}
 \alias{world.h.land}
@@ -7,14 +8,13 @@
 \alias{world.h.rivers}
 \alias{world.h.borders}
 \alias{npacific}
-\alias{Git.World.f.HiRez.R}
 \docType{data}
 \title{
 GSHHS - A Global Self-consistent, Hierarchical, High-resolution Shoreline Database
 }
 \description{
 Both the high and full resolutions of GSHHS have been converted for use in R.  The high resolution of GSHHS is provided
-with the Imap package, the full resolution is available from GitHub using the Git.World.f.HiRez.R function. :
+with the Imap package, the full resolution is available from GitHub using the \code{Git.World.f.HiRez.R} function. :
 
 > Git.World.f.HiRez.R()						
 
