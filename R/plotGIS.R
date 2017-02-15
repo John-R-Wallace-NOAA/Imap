@@ -59,9 +59,9 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
         points(LongLat[LongLat[,1] >= minLon & LongLat[,1] <= maxLon & LongLat[,2] >= minLat &  LongLat[,2] <= maxLat,], col = col.pts, pch = pch.pts, cex = cex.pts)
 
     if(!is.null(polygons)) {
-
+        col.poly <- rep(col.poly, length = length(polygon))
         for ( i in 1:length(polygons))
-                 polygon(polygons[[i]], col = col.poly, border = border.poly, lwd=lwd.poly)
+                 polygon(polygons[[i]], col = col.poly[i], border = border.poly, lwd=lwd.poly)
     }
 
 }
