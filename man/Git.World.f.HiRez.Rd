@@ -1,4 +1,4 @@
-\alias{Git.World.f.HiRez.R}
+\alias{Git.World.f.HiRez}
 \name{world}
 \alias{world}
 \alias{world.h.land}
