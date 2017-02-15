@@ -6,7 +6,7 @@ Install or upgrade with:
     if (!require('devtools')) install.packages('devtools')  # Get devtools if you don't already have it.
     
     devtools::install_github("John-R-Wallace/Imap")
-```diff
-- Note that by using old style manual files it appears that restarting R may be needed after an upgrade.
+```diff 
+- After an upgrade, restarting R may be needed before the help pages will work (the Imap.rdb' is not actually corrupt).
 ```
 
