@@ -73,8 +73,9 @@ The levels, in meters, of the contour lines to plot.
 }
 }
 \value{
-A bathymetric figure off the West Coast of the contiguous U.S. is created with Long/Lat ranges given by 'longrange' and 'latrange' and contour lines with levels given by 'levels.contour'.
-Otional 'LongLat' points and polygon in 'Polygons.List' with be plotted over the bathymetry. 
+A bathymetric figure off the West Coast of the contiguous U.S. is created with Long/Lat ranges given by 'longrange' and
+'latrange' and contour lines with levels given by 'levels.contour'.  Optionally, 'LongLat' points and polygons in the 'polygons' 
+list can be plotted over the bathymetry. 
 }
 \references{
 For getting the bathymetry into R, I followed Tom Wainwright here: 
