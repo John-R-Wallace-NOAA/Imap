@@ -71,6 +71,12 @@ a reasonable internet connection is rarely needed.
    \item{levels.contour}{
 The levels, in meters, of the contour lines to plot.
 }
+   \item{GoogleEarth}{
+Show the raster image (converted to KML format) in Google Earth. The default is FALSE. 
+}
+ \item{alphaGoog}{
+Set the alpha transparency level for the overlay image in Google Earth. 
+}
 }
 \value{
 A bathymetric figure off the West Coast of the contiguous U.S. is created with Long/Lat ranges given by 'longrange' and
