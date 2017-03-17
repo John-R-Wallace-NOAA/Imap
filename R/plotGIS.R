@@ -1,68 +1,69 @@
-plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE,
-                     method = "bilinear", quiet = TRUE, imap = TRUE, alpha = 1, col.pts = 'red', pch.pts = 16, cex.pts = 0.25,
-                     col.poly =  col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0,-2000, by=-100), ...) {
- 
+plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
+    -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", 
+    quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, 
+    cex.pts = 0.25, col.poly = col.alpha("blue", 0.5), border.poly = NULL, 
+    lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
+        by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
+{
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
         devtools::install_github("John-R-Wallace/R-ToolBox")
     JRWToolBox::lib(raster)
-
-    if(is.null(LongLat)) {
-       plotPoints <- FALSE
-       LongLat <- c(mean(longrange), mean(latrange))
-    } else
-        plotPoints = TRUE
-    
+    if (GoogleEarth) 
+        JRWToolBox::lib(plotKML)
+    if (is.null(LongLat)) {
+        plotPoints <- FALSE
+        LongLat <- c(mean(longrange), mean(latrange))
+    }
+    else plotPoints = TRUE
     if (is.null(nrow(LongLat))) 
-         LongLat <- as.data.frame(t(LongLat))
-  
-    Long <- as.numeric(LongLat[,1])
-    Lat <- as.numeric(LongLat[,2])
-
+        LongLat <- as.data.frame(t(LongLat))
+    Long <- as.numeric(LongLat[, 1])
+    Lat <- as.numeric(LongLat[, 2])
     minLon <- longrange[1]
     maxLon <- longrange[2]
     minLat <- latrange[1]
     maxLat <- latrange[2]
-
-   if(is.null(Fname)) {
-
-       if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 30.99972218222) & all(Lat < 36.99972223022) & SoCal_1as)
-            URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
+    if (is.null(Fname)) {
+        if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 
+            30.99972218222) & all(Lat < 36.99972223022) & SoCal_1as) 
+            URL <- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
                 "wcs.groovy?filename=socal_1as.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
                 "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&", 
                 "resx=0.000277777780000&resy=0.000277777780000&bbox=", 
-                minLon, ",", minLat, ",", maxLon, ",", maxLat, 
-                sep = "")
-          
-        else 
-            URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
-                "wcs.groovy?filename=crm.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
-                "coverage=crm&CRS=EPSG:4326&format=geotiff&", 
-                "resx=0.000833333333333334&resy=0.000833333333333334&bbox=", 
-                minLon, ",", minLat, ",", maxLon, ",", maxLat, 
-                sep = "")
-        
-       Fname <- "TMP.tif"
-       optUSR <- options(warn = -2)
-       on.exit(options(optUSR))
-       utils::download.file(URL, Fname, mode = "wb", cacheOK = FALSE, quiet = quiet)
+                minLon, ",", minLat, ",", maxLon, ",", maxLat)
+        else URL <- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
+            "wcs.groovy?filename=crm.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
+            "coverage=crm&CRS=EPSG:4326&format=geotiff&", "resx=0.000833333333333334&resy=0.000833333333333334&bbox=", 
+            minLon, ",", minLat, ",", maxLon, ",", maxLat)
+        Fname <- "TMP.tif"
+        optUSR <- options(warn = -2)
+        on.exit(options(optUSR))
+        utils::download.file(URL, Fname, mode = "wb", cacheOK = FALSE, 
+            quiet = quiet)
     }
-    BathySmall <- raster::raster(Fname)
+    BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
     raster::plot(BathySmall, alpha = alpha)
-    raster::contour(BathySmall, maxpixels = 500000, add = T, levels = levels.contour, ...)
-
-    if(imap)
-      Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon) , latrange = c(minLat, maxLat), add = T, zoom = F)
-
-    if(plotPoints)
-        points(LongLat[LongLat[,1] >= minLon & LongLat[,1] <= maxLon & LongLat[,2] >= minLat &  LongLat[,2] <= maxLat,], col = col.pts, pch = pch.pts, cex = cex.pts)
-
-    if(!is.null(polygons)) {
+    raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, 
+        ...)
+    if (imap) 
+        Imap::imap(Imap::world.h.land, longrange = c(minLon, 
+            maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
+    if (plotPoints) 
+        points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= 
+            maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= 
+            maxLat, ], col = col.pts, pch = pch.pts, cex = cex.pts)
+    if (!is.null(polygons)) {
         col.poly <- rep(col.poly, length = length(polygons))
-        for ( i in 1:length(polygons))
-                 polygon(polygons[[i]], col = col.poly[i], border = border.poly, lwd=lwd.poly)
+        for (i in 1:length(polygons)) polygon(polygons[[i]], 
+            col = col.poly[i], border = border.poly, lwd = lwd.poly)
     }
+    if (GoogleEarth) {
+        assign("alphaGoog", alphaGoog, pos=1)
+        plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
+   }
 
 }
+
 
