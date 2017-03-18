@@ -40,14 +40,14 @@ Should addition information be surpressed. Defaults to the logical negation of t
 When a long/lat point is in a volume, but outside of an area which contains data, an exact zero is extracted. Should these zeros
 be converted into NA's.  The default is TRUE.
 }
-   \item{plot3D}{
+  \item{plot3D}{
 Plot a 3D cloud of color banded points using the 'rgl' package.
 }
-   \item{GoogleEarth}{
+  \item{GoogleEarth}{
 Show the raster image (converted to KML format) in Google Earth.  The default is FALSE.
 }
-     \item{alphaGoog}{
-Set the alpha transparency level for the overlay image in Google Earth. 
+  \item{alphaGoog}{
+Set the alpha transparency level for the raster image in Google Earth. The default is 0.5.
 }
 }
 \value{
