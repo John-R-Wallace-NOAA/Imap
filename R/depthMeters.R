@@ -1,6 +1,6 @@
 depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
     SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE, 
-    plot3D = FALSE, GoogleEarth = FALSE) 
+    plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
 {
     "  "
     "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
@@ -107,7 +107,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
             plot3d(BathySmall.xyz, col = BathySmall.xyz$Color)
         }
         if (GoogleEarth) 
-                plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)))
+                plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
         ' '    
         -raster::extract(BathySmall, LongLat, method = method)
     }
