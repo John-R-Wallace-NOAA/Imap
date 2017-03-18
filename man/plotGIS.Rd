@@ -75,7 +75,7 @@ The levels, in meters, of the contour lines to plot.
 Show the raster image (converted to KML format) in Google Earth. The default is FALSE. 
 }
  \item{alphaGoog}{
-Set the alpha transparency level for the overlay image in Google Earth. 
+Set the alpha transparency level for the raster image in Google Earth. The default is 0.5 .
 }
 }
 \value{
