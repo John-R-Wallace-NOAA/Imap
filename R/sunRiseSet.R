@@ -8,6 +8,7 @@ sunRiseSet <- function(Dates.Locs, timezone="America/Los_Angeles") {
 '  # Example: '
 '  #    (Dates.Locs <- data.frame(Date = c("2008-11-08", "2017-03-24"), Lat = c(33.46, 47 + 38/60 + 40/3600), Long = c(-84.25, -(122 + 18/60 + 24/3600))))  '
 '  #    sunRiseSet(Dates.Locs)  '
+'  #    cbind(Dates.Locs, sunRiseSet(Dates.Locs)) '
 '  '
 '  # Locations and Dates need to be all in the same time zone for now.... '
 '  '
@@ -22,7 +23,7 @@ sunRiseSet <- function(Dates.Locs, timezone="America/Los_Angeles") {
         sunset <- sunriset(lat.long, sequence, direction="sunset", POSIXct=TRUE)
         ss <- data.frame(sunrise, sunset)
         ss <- ss[,-c(1,3)]
-        colnames(ss)<-c("sunrise", "sunset")
+        colnames(ss)<-c("sunRise", "sunSet")
         ss[1] <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1,1]), 12))
         ss[2] <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1,2]), 12))
         ss
