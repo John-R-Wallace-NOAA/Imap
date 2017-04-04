@@ -32,7 +32,7 @@ somewhere in the figure region) will zoom out locally.  Double left-clicking on 
 will reset the figure.  Right-click to stop.
 }
 \author{
-John R. Wallace: \email{Imap.for.R@gmail.com} (Limited support)
+John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \examples{
     #	See examples under the main 'imap() function.
