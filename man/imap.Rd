@@ -95,7 +95,7 @@ the object given to 'longlat'). Each primary item has the following components.
 \item{poly}{The polygon color (or NA) for the polygon of this primary item.}
 }
 \author{
-John R. Wallace: \email{Imap.for.R@gmail.com} (Limited support)
+John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \seealso{
 \code{\link{imap.ll}}, \code{\link{select.pts}}, \code{\link{world}}, \code{\link{gdist}}
