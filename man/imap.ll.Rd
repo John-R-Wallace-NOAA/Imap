@@ -77,7 +77,7 @@ Only data contained within the last area to be zoomed in on is invisibly returne
 }
 
 \author{
-John R. Wallace: \email{Imap.for.R@gmail.com} (Limited support)
+John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 
 \seealso{
