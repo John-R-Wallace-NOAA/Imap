@@ -10,6 +10,8 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
         devtools::install_github("John-R-Wallace/R-ToolBox")
     JRWToolBox::lib(raster)
+    JRWToolBox::lib(sp)
+    JRWToolBox::lib(rgdal)    
     if (GoogleEarth) 
         JRWToolBox::lib(plotKML)
     if (is.null(LongLat)) {
