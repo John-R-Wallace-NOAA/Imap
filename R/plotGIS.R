@@ -1,6 +1,6 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
     -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", 
-    quiet = TRUE, imap = TRUE, alpha = 1, col.pts = "red", pch.pts = 16, 
+    quiet = TRUE, imap = TRUE, col.imap = grey, alpha = 1, col.pts = "red", pch.pts = 16, 
     cex.pts = 0.25, col.poly = col.alpha("blue", 0.5), border.poly = NULL, 
     lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
         by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
@@ -51,7 +51,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
         ...)
     if (imap) 
         Imap::imap(Imap::world.h.land, longrange = c(minLon, 
-            maxLon), latrange = c(minLat, maxLat), add = T, zoom = F)
+            maxLon), latrange = c(minLat, maxLat), add = T,  poly = col.imap, zoom = F)
     if (plotPoints) 
         points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= 
             maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= 
