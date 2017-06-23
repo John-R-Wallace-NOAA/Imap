@@ -47,8 +47,8 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     }
     BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
     raster::plot(BathySmall, alpha = alpha)
-    raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, 
-        ...)
+    if(!is.NULL(levels.contour))        
+        raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
     if (imap) 
         Imap::imap(Imap::world.h.land, longrange = c(minLon, 
             maxLon), latrange = c(minLat, maxLat), add = T,  poly = col.imap, zoom = F)
