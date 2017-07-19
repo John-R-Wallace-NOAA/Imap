@@ -9,7 +9,7 @@ Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. 
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
-        method = "bilinear", quiet = TRUE, imap = TRUE, col.imap = grey, alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+        method = "bilinear", quiet = TRUE, imap = TRUE, col.imap = "grey40", alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
         col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
         levels.contour = seq(0, -2000, by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...)  
 }
@@ -41,7 +41,7 @@ the default is TRUE.
 Should the \code{imap} function be used for a land overlay. Default is TRUE.
 }
 \item{col.imap}{
-Color of the imap() land overlay. Default is grey.
+Color of the imap() land overlay. Default is "grey40".
 }
   \item{alpha}{
 Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1). Passed to the \code{plot} function in the \code{Raster} package.
