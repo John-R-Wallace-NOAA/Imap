@@ -46,6 +46,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
             quiet = quiet)
     }
     BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
+    NAvalue(BathySmall) <- BathySmall@data@min
     raster::plot(BathySmall, alpha = alpha)
     if(!is.null(levels.contour))        
         raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
