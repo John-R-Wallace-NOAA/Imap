@@ -1,9 +1,11 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
     -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", 
-    quiet = TRUE, imap = TRUE, col.imap = "grey40", alpha = 1, col.pts = "red", pch.pts = 16, 
-    cex.pts = 0.25, col.poly = col.alpha("blue", 0.5), border.poly = NULL, 
-    lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
-        by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
+    quiet = TRUE, imap = TRUE, col.imap = "grey40", alpha = 1, 
+    col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+	col.poly =  JRWToolBox::col.alpha(grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red"))(length(polygons)), 0.75),
+    border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
+    levels.contour = seq(0, -2000, by = -100), GoogleEarth = FALSE, 
+    alphaGoog = 0.5, ...) 
 {
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
@@ -11,7 +13,8 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
         devtools::install_github("John-R-Wallace/R-ToolBox")
     JRWToolBox::lib(raster)
     JRWToolBox::lib(sp)
-    JRWToolBox::lib(rgdal)    
+    JRWToolBox::lib(rgdal)
+	JRWToolBox::lib(grDevices)
     if (GoogleEarth) 
         JRWToolBox::lib(plotKML)
     if (is.null(LongLat)) {
@@ -45,14 +48,17 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
         utils::download.file(URL, Fname, mode = "wb", cacheOK = FALSE, 
             quiet = quiet)
     }
-    BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
+    BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, 
+        ymn = minLat, ymx = maxLat)
     NAvalue(BathySmall) <- BathySmall@data@min
     raster::plot(BathySmall, alpha = alpha)
-    if(!is.null(levels.contour))        
-        raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
+    if (!is.null(levels.contour)) 
+        raster::contour(BathySmall, maxpixels = 5e+05, add = T, 
+            levels = levels.contour, ...)
     if (imap) 
         Imap::imap(Imap::world.h.land, longrange = c(minLon, 
-            maxLon), latrange = c(minLat, maxLat), add = T,  poly = col.imap, zoom = F)
+            maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, 
+            zoom = F)
     if (plotPoints) 
         points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= 
             maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= 
@@ -63,10 +69,8 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
             col = col.poly[i], border = border.poly, lwd = lwd.poly)
     }
     if (GoogleEarth) {
-        assign("alphaGoog", alphaGoog, pos=1)
-        plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
-   }
-
+        assign("alphaGoog", alphaGoog, pos = 1)
+        plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), 
+            alpha = alphaGoog)
+    }
 }
-
-
