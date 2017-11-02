@@ -56,7 +56,7 @@ Type of LongLat point to plotted, see the help for \code{points}.
 Size of Longlat point to be plotted.
 }
    \item{col.poly}{
-Colors of the polygon fill in the 'polygons' list to be plotted. The default is blue with an alpha level of 0.5. 
+Color of the polygon fills in the 'polygons' list to be plotted. The default is a color ramp (see the default for the colors) with an alpha of 0.75. 
 The colors will be repeated as needed.
 }
    \item{border.poly}{
