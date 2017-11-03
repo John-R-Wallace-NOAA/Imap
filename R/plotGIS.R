@@ -1,11 +1,11 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
-    -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, method = "bilinear", 
-    quiet = TRUE, imap = TRUE, col.imap = "grey40", alpha = 1, 
-    col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
-	col.poly =  JRWToolBox::col.alpha(grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red"))(length(polygons)), 0.75),
-    border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
-    levels.contour = seq(0, -2000, by = -100), GoogleEarth = FALSE, 
-    alphaGoog = 0.5, ...) 
+    -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
+    quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, 
+    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = JRWToolBox::col.alpha((grDevices::colorRampPalette(colors = c("darkblue", 
+        "blue", "lightblue", "lightgreen", "yellow", "orange", 
+        "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
+    lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
+        by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 {
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
@@ -14,9 +14,10 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     JRWToolBox::lib(raster)
     JRWToolBox::lib(sp)
     JRWToolBox::lib(rgdal)
-	JRWToolBox::lib(grDevices)
+    JRWToolBox::lib(grDevices)
     if (GoogleEarth) 
         JRWToolBox::lib(plotKML)
+'  '
     if (is.null(LongLat)) {
         plotPoints <- FALSE
         LongLat <- c(mean(longrange), mean(latrange))
@@ -51,7 +52,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, 
         ymn = minLat, ymx = maxLat)
     NAvalue(BathySmall) <- BathySmall@data@min
-    raster::plot(BathySmall, alpha = alpha)
+    raster::plot(BathySmall, alpha = alphaRaster)
     if (!is.null(levels.contour)) 
         raster::contour(BathySmall, maxpixels = 5e+05, add = T, 
             levels = levels.contour, ...)
