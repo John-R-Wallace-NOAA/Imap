@@ -1,7 +1,7 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
     -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
     quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, 
-    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = JRWToolBox::col.alpha((grDevices::colorRampPalette(colors = c("darkblue", 
+    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", 
         "blue", "lightblue", "lightgreen", "yellow", "orange", 
         "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
     lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
