@@ -8,10 +8,12 @@ Plot a bathymetric figure off the West Coast of the contiguous U.S.
 Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 Arc-Second coverage goes further south and west.
 }
 \usage{
-plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
-        method = "bilinear", quiet = TRUE, imap = TRUE, col.imap = "grey40", alpha = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
-        col.poly = col.alpha('blue', 0.5), border.poly = NULL, lwd.poly = 1.5, Fname = NULL, 
-        levels.contour = seq(0, -2000, by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...)  
+plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
+    SoCal_1as = TRUE, quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, 
+    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = 
+    c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
+    alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, by = -100), 
+    GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 }
 \arguments{
   \item{LongLat}{
@@ -30,9 +32,6 @@ Latitudinal range of the figure to be plotted.
   \item{SoCal_1as}{
 Should 1 Arc-Second volume 6 (see the references) be used when possible. The default is TRUE.
 }
-  \item{method}{
-Method used to extract the depth from a Raster object using the \code{extract} funcion in the \code{raster} package. Defaults to 'bilinear'.
-}
   \item{quiet}{
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data, 
 the default is TRUE.
@@ -43,8 +42,9 @@ Should the \code{imap} function be used for a land overlay. Default is TRUE.
 \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
 }
-  \item{alpha}{
-Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1). Passed to the \code{plot} function in the \code{Raster} package.
+  \item{alphaRaster}{
+Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1). 
+Passed to the \code{plot} function in the \code{Raster} package.
 }
   \item{col.pts}{
 Color of the LongLat points to be plotted. The default is red.
@@ -56,8 +56,12 @@ Type of LongLat point to plotted, see the help for \code{points}.
 Size of Longlat point to be plotted.
 }
    \item{col.poly}{
-Color of the polygon fills in the 'polygons' list to be plotted. The default is a color ramp (see the default for the colors) with an alpha of 0.75. 
-The colors will be repeated as needed.
+Color of the polygon fills in the 'polygons' list to be plotted. The default is a color ramp (see the default for included colors) 
+with an alpha of 0.75. The colors will be repeated as needed.
+}
+\item{alpha}{
+Number between 0 and 1 to set transparency. 0 is entirely transparent, 1 is not transparent (NULL is equivalent to 1). 
+Sets the alpha level of the colors in the 'col.poly' argument.
 }
    \item{border.poly}{
 Color of the polygon border in the 'polygons' list to be plotted.
