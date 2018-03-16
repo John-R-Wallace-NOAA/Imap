@@ -10,7 +10,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
-        devtools::install_github("John-R-Wallace/R-ToolBox")
+        devtools::install_github("John-R-Wallace/JRWToolBox")
     JRWToolBox::lib(raster)
     JRWToolBox::lib(sp)
     JRWToolBox::lib(rgdal)
