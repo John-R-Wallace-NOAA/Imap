@@ -18,7 +18,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
-        devtools::install_github("John-R-Wallace/R-ToolBox")
+        devtools::install_github("John-R-Wallace/JRWToolBox")
     JRWToolBox::lib(raster)
     if (GoogleEarth) 
         JRWToolBox::lib(plotKML)
