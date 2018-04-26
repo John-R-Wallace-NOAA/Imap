@@ -70,7 +70,7 @@ In particular, exactly equal adjacent x values will cause the original function 
 See  \url{http://www.biostat.wustl.edu/archives/html/s-news/2002-07/msg00020.html} 
 }
 \author{
-John R. Wallace: \emailemail{John.Wallace@noaa.gov} 
+John R. Wallace: \email{John.Wallace@noaa.gov} 
 }
 \note{
 If points inside a polygon were not selected try again with a less irregular polygon.
