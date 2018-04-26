@@ -1,5 +1,4 @@
-select.pts <-
-function (pts, list.of.lists.obj = 1, outside.poly = FALSE, col = "blue", alpha = 0.5, lty = 1, ...) 
+select.pts <- function (pts, list.of.lists.obj = 1, outside.poly = FALSE, col = "blue", alpha = 0.5, lty = 1, ...) 
 {
 
     if(is.list(pts) == TRUE & !is.null(names(pts[[list.of.lists.obj]]))) {
