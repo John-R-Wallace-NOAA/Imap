@@ -34,20 +34,21 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126,
     if (is.null(Fname)) {
         if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 
             30.99972218222) & all(Lat < 36.99972223022) & SoCal_1as) 
-            URL <- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
+            URL <<- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
                 "wcs.groovy?filename=socal_1as.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
                 "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&", 
                 "resx=0.000277777780000&resy=0.000277777780000&bbox=", 
                 minLon, ",", minLat, ",", maxLon, ",", maxLat)
-        else URL <- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
+        else URL <<- paste0("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
             "wcs.groovy?filename=crm.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
             "coverage=crm&CRS=EPSG:4326&format=geotiff&", "resx=0.000833333333333334&resy=0.000833333333333334&bbox=", 
             minLon, ",", minLat, ",", maxLon, ",", maxLat)
         Fname <- "TMP.tif"
-        optUSR <- options(warn = -2)
-        on.exit(options(optUSR))
-        utils::download.file(URL, Fname, mode = "wb", cacheOK = FALSE, 
-            quiet = quiet)
+		if(quiet) {
+           optUSR <- options(warn = -2)
+           on.exit(options(optUSR))
+		}
+        utils::download.file(URL, Fname, method = 'auto', mode = "wb", cacheOK = FALSE, quiet = quiet)
     }
     BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, 
         ymn = minLat, ymx = maxLat)
