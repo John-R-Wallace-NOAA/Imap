@@ -79,7 +79,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         Fname <- "TMP.tif"
         optUSR <- options(warn = -2)
         on.exit(options(optUSR))
-        utils::download.file(URL, Fname, mode = "wb", cacheOK = FALSE, 
+        utils::download.file(URL, Fname, method = 'auto', mode = "wb", cacheOK = FALSE, 
             quiet = quiet)
         BathySmall <- raster::raster(Fname)
         if (plot) {
@@ -92,7 +92,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         }
         if (plot3D) {
             Fname.xyz <- "TMP_xyz.tif"
-            utils::download.file(URL.xyz, Fname.xyz, mode = "wb", 
+            utils::download.file(URL.xyz, Fname.xyz, method = 'auto', mode = "wb", 
                 cacheOK = FALSE, quiet = quiet)
             BathySmall.xyz <- read.table(Fname.xyz, head = F)
             names(BathySmall.xyz) <- c("Longitude", "Latitude", 
