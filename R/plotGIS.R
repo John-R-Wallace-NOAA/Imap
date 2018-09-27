@@ -1,11 +1,9 @@
-plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, 
-    -124), latrange = c(41.5, 43.5), SoCal_1as = TRUE, 
-    quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, 
-    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", 
-        "blue", "lightblue", "lightgreen", "yellow", "orange", 
-        "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
-    lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, 
-        by = -100), GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
+plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
+    SoCal_1as = TRUE,quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
+    cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue",
+    "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
+    lwd.poly = 1.5, Fname = NULL, levels.contour = if(imap) seq(-100, -2000, by = -100) else seq(0, -2000, by = -100),
+    GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 {
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
