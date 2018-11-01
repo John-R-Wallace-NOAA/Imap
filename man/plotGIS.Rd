@@ -1,7 +1,7 @@
 \name{plotGIS}
 \alias{plotGIS}
 \title{
-Plot a bathymetric figure off the West Coast of the contiguous U.S.
+Plot data from NOAA's National Centers for Environmental Information, including bathymetric information
 }
 \description{
 \code{plotGIS} creates a GIS bathymetric figure off the coasts of Washington, Oregon, and California using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. 
@@ -9,9 +9,9 @@ Note that the SoCal 1 Arc-Second extends to the southeastern corner of the U.S. 
 }
 \usage{
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    SoCal_1as = TRUE, quiet = TRUE, imap = TRUE, col.imap = "grey40", alphaRaster = 1, 
-    col.pts = "red", pch.pts = 16, cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = 
-    c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
+    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, imap = TRUE, 
+    col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+    col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, by = -100), 
     GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 }
@@ -29,8 +29,14 @@ Longitudinal range of the figure to be plotted.
   \item{latrange}{
 Latitudinal range of the figure to be plotted.
 }
-  \item{SoCal_1as}{
-Should 1 Arc-Second volume 6 (see the references) be used when possible. The default is TRUE.
+  \item{layer}{
+Which layer should be used: 'etopo1' = Entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution), 
+'etopo1_bedrock' = Entire Earth's surface with the bedrock underneath the ice sheets revealed (1-minute resolution),
+'crm' = Coastal Relief Model for the contiguous U.S. (3 arc-second resolution), or 'SoCal_1as' = Southern California (1 arc-second resolution). 
+The default is 'etopo1, but this is changed when autoLayer is TRUE (its default).
+}
+  \item{autoLayer}{
+Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE.
 }
   \item{quiet}{
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data, 
@@ -91,10 +97,10 @@ A bathymetric figure off the West Coast of the contiguous U.S. is created with L
 list can be plotted over the bathymetry. 
 }
 \references{
-For getting the bathymetry into R, I followed Tom Wainwright here: 
+For getting the bathymetry into R, I followed Tom Wainwright's presentation: 
 \url{http://rstudio-pubs-static.s3.amazonaws.com/53530_1af2d0b5ae1f4a36a75e611d3566f777.html#1}
 
-U.S. Coastal Relief Model Map is here:  \url{http://www.ngdc.noaa.gov/mgg/coastal/crm.html}
+Grid Extract: \url{https://maps.ngdc.noaa.gov/viewers/wcs-client} and U.S. Coastal Relief Model overview: \url{http://www.ngdc.noaa.gov/mgg/coastal/crm.html}
 }
 \author{
 John R. Wallace: \email{John.Wallace@noaa.gov}
@@ -102,15 +108,14 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 \seealso{
 \code{\link{depthMeters}}, \code{\link{draw.polygon}} 
 
-This function uses the double colon operator for access to the \code{raster} function 
-[\code{raster::raster(...)}].  Therefore to see the help for \code{raster()}, either load the package 
-or use: \code{?raster::raster}
+This function uses the double colon operator for access to the \code{raster} function [\code{raster::raster(...)}] to avoid loading the package.  
+Therefore to see the help for \code{raster()}, either load the package or use: \code{?raster::raster}
 }
 \examples{
 \dontrun{
    plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
    
-  temp.poly <- list(data.frame(x= c( -125, -125, -124.6, -124.6, -125), y = c(42.2, 42, 42, 42.2, 42.2)), 
+   temp.poly <- list(data.frame(x= c( -125, -125, -124.6, -124.6, -125), y = c(42.2, 42, 42, 42.2, 42.2)), 
                     data.frame(x= c( -124.8, -124.8, -124.4, -124.4, -124.8), y = c(42.1, 41.9, 41.9, 42.1, 42.1)))
 
    plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
@@ -120,6 +125,9 @@ or use: \code{?raster::raster}
    plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
    dev.new()
    plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), SoCal_1as=FALSE)
+   
+   # Use imapToGIS() to zoom into an area which then will be replaced by a raster image with the same bounding box coordinates.
+   imapToGIS()
 }
 }
 
