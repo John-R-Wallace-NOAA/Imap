@@ -6,7 +6,7 @@ Plot data from NOAA's National Centers for Environmental Information, including 
 \description{
 \code{plotGIS} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
 Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. Note that the SoCal 1 arc-second data extends 
-to the southeastern corner of the U.S. West Cost EEZ, however the SoCal 3 arc-second coverage goes further south and west.
+to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.
 }
 \usage{
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
