@@ -31,8 +31,8 @@ Longitudinal range of the figure to be plotted.
 Latitudinal range of the figure to be plotted.
 }
   \item{layer}{
-Which layer should be used: 'etopo1' = Entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution), 
-'etopo1_bedrock' = Entire Earth's surface with the bedrock underneath the ice sheets revealed (1-minute resolution),
+Which layer should be used: 'etopo1' = entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution), 
+'etopo1_bedrock' = entire Earth's surface with the bedrock underneath the ice sheets revealed (1-minute resolution),
 'crm' = Coastal Relief Model for the contiguous U.S. (3 arc-second resolution), or 'SoCal_1as' = Southern California (1 arc-second resolution). 
 The default is 'etopo1, but this is changed when autoLayer is TRUE (its default).
 }
