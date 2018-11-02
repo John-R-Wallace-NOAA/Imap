@@ -7,11 +7,14 @@
 \code{imapToGIS} will zoom into an area using \code{imap} and then use the same bounding box to replace the figure with a raster image using \code{plotGIS}.
 }
 \usage{
-imapToGIS(landOverlay = FALSE, ...)
+imapToGIS(landOverlay = FALSE, verbose = verbose, ...)
 }
 \arguments{
   \item{landOverlay}{
 Use \code{imap} to overlay land onto the figure.  Default is FALSE.
+}
+ \item{verbose}{
+Should information about the layer used and the URL to extract the data be shown. Default is TRUE. 
 }
   \item{...}{
 Additional arguments are passed to \code{plotGIS}
