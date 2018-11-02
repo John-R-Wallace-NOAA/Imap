@@ -41,14 +41,14 @@ The default is 'etopo1, but this is changed when autoLayer is TRUE (its default)
 Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE.
 }
   \item{quiet}{
-Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data, 
+Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL to extract the data not be shown. 
 the default is TRUE.
 }
   \item{landOverlay}{
 Should the \code{imap} function be used for a land overlay. Default is TRUE. 
 }
   \item{verbose}{
-Should information about the layer used and the URL to extract the data be shown. Default is FALSE. 
+Should information about the layer used be shown. Default is FALSE. 
 }
 \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
