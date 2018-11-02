@@ -5,15 +5,16 @@ Plot data from NOAA's National Centers for Environmental Information, including 
 }
 \description{
 \code{plotGIS} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
-Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. Note that the SoCal 1 arc-second data extends 
-to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.
+Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. The SoCal 1 arc-second data extends 
+to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.  Note also that the defaults for 
+land overlay and the contour lines are bathymetric centric. (The default for \code{imapToGIS} is not bathymetric centric.)
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, imap = TRUE, 
+    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, landOverlay = TRUE, 
     col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
     col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
-    alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = seq(0, -2000, by = -100), 
+    alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
     GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 }
 \arguments{
@@ -43,8 +44,8 @@ Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) 
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data, 
 the default is TRUE.
 }
-  \item{imap}{
-Should the \code{imap} function be used for a land overlay. Default is TRUE.
+  \item{landOverlay}{
+Should the \code{imap} function be used for a land overlay. Default is TRUE. 
 }
 \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
