@@ -33,8 +33,18 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 \dontrun{
 # imap() is used to zoom into an area. When the interaction is stopped, the figure will be replaced with a raster image.
 imapToGIS()
+
 # For faster download times, use the 'etopo1' layer with its lower resolution for all areas.
 imapToGIS(autoLayer = F) 
+
+# Compare the bathymetry in Southern California with the 3 available resolutions. (Zoom into a smallish part of So. Cal. on the water with or without land.)
+BB <- imapToGIS(autoLayer = F) 
+dev.new()
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, autoLayer = F, landOverlay = F, verbose = T) # Start over for the exact same look as below
+dev.new()
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, layer = 'crm', autoLayer = F, landOverlay = F, verbose = T)
+dev.new()
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, landOverlay = F, verbose = T)
 }
 }
 
