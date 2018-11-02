@@ -1,4 +1,4 @@
-imapToGIS <- function(imap = FALSE, ...) {
+imapToGIS <- function(landOverlay = FALSE, ...) {
 
   imap()
   TMP <- par()$usr
@@ -6,6 +6,6 @@ imapToGIS <- function(imap = FALSE, ...) {
   longrange <- TMP[1:2]
   latrange <- TMP[3:4]
   
-  plotGIS(latrange = latrange, longrange = longrange, imap = imap, ...)
+  plotGIS(latrange = latrange, longrange = longrange, landOverlay = landOverlay, ...)
   invisible(list(latrange = latrange, longrange = longrange))
 }
