@@ -1,8 +1,8 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, imap = TRUE, verbose = FALSE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
+    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, landOverlay = TRUE, verbose = FALSE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
     cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue",
     "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
-    lwd.poly = 1.5, Fname = NULL, levels.contour = if(imap) seq(-100, -2000, by = -100) else seq(0, -2000, by = -100),
+    lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500),
     GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 {
     if (!any(installed.packages()[, 1] %in% "devtools")) 
@@ -65,7 +65,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
     if (!is.null(levels.contour)) 
         raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
         
-    if (imap) 
+    if (landOverlay) 
         Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, zoom = F)
         
     if (plotPoints) 
