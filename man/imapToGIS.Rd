@@ -33,6 +33,8 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 \dontrun{
 # imap() is used to zoom into an area. When the interaction is stopped, the figure will be replaced with a raster image.
 imapToGIS()
+# For faster download times, use the 'etopo1' layer with its lower resolution for all areas.
+imapToGIS(autoLayer = F) 
 }
 }
 
