@@ -7,7 +7,7 @@ Plot data from NOAA's National Centers for Environmental Information, including 
 \code{plotGIS} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
 Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. The SoCal 1 arc-second data extends 
 to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.  Note also that the defaults for 
-land overlay and the contour lines are bathymetric centric. (The default for \code{imapToGIS} is not bathymetric centric.)
+land overlay and the contour lines are bathymetric centric. (The overlay default for \code{imapToGIS} is not bathymetric centric.)
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
@@ -44,7 +44,7 @@ Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) 
 Should information about the layer used be shown. Default is FALSE. 
 }
   \item{quiet}{
-Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL to extract the data not be shown. 
+Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL used to extract the data not be shown. 
 the default is TRUE.
 }
   \item{landOverlay}{
