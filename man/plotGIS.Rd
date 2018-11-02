@@ -11,8 +11,8 @@ land overlay and the contour lines are bathymetric centric. (The default for \co
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, landOverlay = TRUE, 
-    verbose = FALSE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, verbose = FALSE, quiet = TRUE, 
+    landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
     col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
     GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
@@ -40,15 +40,15 @@ The default is 'etopo1, but this is changed when autoLayer is TRUE (its default)
   \item{autoLayer}{
 Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE.
 }
+  \item{verbose}{
+Should information about the layer used be shown. Default is FALSE. 
+}
   \item{quiet}{
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL to extract the data not be shown. 
 the default is TRUE.
 }
   \item{landOverlay}{
 Should the \code{imap} function be used for a land overlay. Default is TRUE. 
-}
-  \item{verbose}{
-Should information about the layer used be shown. Default is FALSE. 
 }
 \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
