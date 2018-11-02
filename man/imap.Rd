@@ -105,8 +105,8 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
         if(.Platform$OS.type == "windows")
             windows.options(width=13, height=9)  # Set the window to be wider than high.
 
-	imap()  # On the figure, left-click two corners of an area you would like to zoom in on.
-                # Creating a rectangle outside the figure region will zoom out locally.
+	imap()  # On the figure, left-click two opposite corners of a rectangular area you would like to zoom in on.
+                # Creating a large rectangle outside the figure region will zoom out locally.
                 # Double left-click on the same spot to zoom back out to the original data. Right-click to stop.
                  
         imap(antarctic = TRUE)  # Reset with two left-clicks in the same spot for a more symmetrical picture.
