@@ -7,11 +7,14 @@
 \code{imapToGIS} will zoom into an area using \code{imap} and then use the same bounding box to replace the figure with a raster image using \code{plotGIS}.
 }
 \usage{
-imapToGIS(imap = FALSE)
+imapToGIS(imap = FALSE, ...)
 }
 \arguments{
   \item{imap}{
 Use \code{imap} to overlay land onto the figure.  Default is FALSE.
+}
+  \item{...}{
+Additional arguments are passed to \code{plotGIS}
 }
 }
 \value{
@@ -25,7 +28,7 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 }
 \examples{
 \dontrun{
-# code{\link{imap}} is used to zoom into an area. When the interaction is stopped, the figure will be replaced with a raster image.
+# imap() is used to zoom into an area. When the interaction is stopped, the figure will be replaced with a raster image.
 imapToGIS()
 }
 }
