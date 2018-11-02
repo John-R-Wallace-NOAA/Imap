@@ -14,7 +14,7 @@ imapToGIS(landOverlay = FALSE, verbose = verbose, ...)
 Use \code{imap} to overlay land onto the figure.  Default is FALSE.
 }
  \item{verbose}{
-Should information about the layer used and the URL to extract the data be shown. Default is TRUE. 
+Should information about the layer used. Default is TRUE. 
 }
   \item{...}{
 Additional arguments are passed to \code{plotGIS}
