@@ -12,7 +12,7 @@ land overlay and the contour lines are bathymetric centric. (The default for \co
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
     layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, quiet = TRUE, landOverlay = TRUE, 
-    col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+    verbose = FALSE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
     col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
     GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
@@ -46,6 +46,9 @@ the default is TRUE.
 }
   \item{landOverlay}{
 Should the \code{imap} function be used for a land overlay. Default is TRUE. 
+}
+  \item{verbose}{
+Should information about the layer used and the URL to extract the data be shown. Default is FALSE. 
 }
 \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
