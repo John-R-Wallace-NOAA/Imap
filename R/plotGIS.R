@@ -47,7 +47,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
                 "wcs.groovy?filename=", layer, ".tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
                 "coverage=", layer, "&CRS=EPSG:4326&format=geotiff&", 
                 "resx=", Rez, "&resy=", Rez, "&bbox=", minLon, ",", minLat, ",", maxLon, ",", maxLat)                
-        if(verbose) cat("\n\nURL =", URL, "\n\n") 
+        if(!quiet) cat("\n\nURL =", URL, "\n\n") 
                  
         Fname <- "TMP.tif"
         if(quiet) {
