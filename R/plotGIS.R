@@ -66,7 +66,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
         raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
         
     if (landOverlay) 
-        Imap::imap(Imap::world.h.land, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, zoom = F)
+        Imap::imap(list(Imap::world.h.land, Imap::world.h.borders), longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, zoom = F)
         
     if (plotPoints) 
         points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= maxLat, ],
