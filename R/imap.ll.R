@@ -71,7 +71,7 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
             axis(4, at = yticks, labels = lat.labels, srt = 90)
         }
         if (axes == "yOnly") {
-            do.call(plot, c(list(x = longrange, y = latrange, ylab = "Latitude", type = "n", xaxt = "n", yaxt = "n"), plot.dots))
+            do.call(plot, c(list(x = longrange, y = latrange, xlab = "", ylab = "Latitude", type = "n", xaxt = "n", yaxt = "n"), plot.dots))
             lat.labels <- ifelse(yticks == 0, "0", ifelse(yticks > 0, paste(yticks, ifelse(oz, "S", "N"), sep = ""), paste(-yticks, ifelse(oz, "N", "S"), sep = "")))
             axis(2, at = yticks, labels = lat.labels, srt = 90)
             axis(4, at = yticks, labels = lat.labels, srt = 90)
