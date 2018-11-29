@@ -40,7 +40,7 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
 }
   \item{axes}{
      One of "map" (the default), "std", "latOnly", or FALSE.  Using "map" will show longitude and latitude markings, 
-     "std" will give the standard plotting markings, "latOnly" will give only latitude markings, and FALSE 
+     "std" will give the standard plot markings, "latOnly" will give only latitude markings, and FALSE 
      will give no axes, labels, nor outside box.
 }
   \item{grid}{
