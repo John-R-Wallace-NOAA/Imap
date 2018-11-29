@@ -39,14 +39,15 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
      Should the perspective be with the South Pole on top (As one in Australia (Oz) might like.). Default is FALSE.
 }
   \item{axes}{
-     One of "map" (the default), "std", or FALSE.  Using "map" will show longitude and latitude markings, "std" will give the standard plotting labels,
-     and FALSE will give no axes at all.
+     One of "map" (the default), "std", "latOnly", or FALSE.  Using "map" will show longitude and latitude markings, 
+     "std" will give the standard plotting markings, "latOnly" will give only latitude markings, and FALSE 
+     will give no axes, labels, nor outside box.
 }
   \item{grid}{
      If TRUE a thin dashed grid will be shown. Default in FALSE.
 }
   \item{aspect}{
-    A figure aspect for which larger values mean the figure will be more high than wide.  Lower values will give a figure that is wider than high.
+    A figure aspect for which larger values mean the figure will be more high than wide. Lower values will give a figure that is wider than high.
     The default is 1.5.
 }
   \item{add}{
