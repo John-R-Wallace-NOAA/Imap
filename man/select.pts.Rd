@@ -8,7 +8,7 @@
 Select points; draw polygons; draw lines
 }
 \description{
-Functions for selecting points and drawing polygons and lines.
+Functions for selecting points using polygons and drawing polygons and lines.
 }
 \usage{
 select.pts(pts,  list.of.lists.obj = 1, outside.poly = FALSE, col = "blue", alpha = 0.5, lty = 1, ...)
