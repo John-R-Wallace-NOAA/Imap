@@ -5,6 +5,7 @@ sunRiseSet <- function (Dates.Locs, timezone = "America/Los_Angeles")
     '  # sunrise.set() is from:  http://r.789695.n4.nabble.com/maptools-sunrise-sunset-function-td874148.html  '
     '  # Example: '
     '  #    (Dates.Locs <- data.frame(Date = c("2008-11-08", "2017-03-24"), Lat = c(33.46, 47 + 38/60 + 40/3600), Long = c(-120.25, -(122 + 18/60 + 24/3600))))  '
+    "  #    c('2008-11-08', '2017-03-24') "
     '  #    sunRiseSet(Dates.Locs)  '
     '  #    cbind(Dates.Locs, sunRiseSet(Dates.Locs)) '
     '  '
