@@ -60,7 +60,7 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
     
     # BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
     BathySmall <- raster::raster(Fname) # Can't override limits inside of Fname
-    NAvalue(BathySmall) <- BathySmall@data@min
+    raster::NAvalue(BathySmall) <- BathySmall@data@min
     raster::plot(BathySmall, alpha = alphaRaster)
     
     if (!is.null(levels.contour)) 
