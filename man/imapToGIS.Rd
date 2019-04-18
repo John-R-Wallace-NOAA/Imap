@@ -14,7 +14,7 @@ imapToGIS(landOverlay = FALSE, verbose = TRUE, ...)
 Use \code{imap} to overlay land onto the figure.  Default is FALSE.
 }
  \item{verbose}{
-Should information about the layer used. Default is TRUE. 
+Should information about the layer used be printed on the console. Default is TRUE. 
 }
   \item{...}{
 Additional arguments are passed to \code{plotGIS}
