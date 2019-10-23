@@ -1,7 +1,7 @@
-imap <-
-function (longlat = list(world.h.land, world.h.lake, world.h.island, world.h.pond.in.island, world.h.borders), 
+imap <- function (longlat = list(world.h.land, world.h.lake, world.h.island, world.h.pond.in.island, world.h.borders), 
     longrange, latrange, zoom = TRUE, col= c("black", "blue", "forestgreen", "dodgerblue", "cyan"), fill = TRUE, 
-    poly = c("grey40", "blue", "forestgreen", "dodgerblue", NA), lwd = 1, keep.attr = TRUE, add.all = FALSE, bg = "grey81", tol = 0.05, ...) 
+    poly = c("grey40", "blue", "forestgreen", "dodgerblue", NA), lwd = 1, keep.attr = TRUE, add.all = FALSE, bg = "grey81", 
+    tol = 0.05, cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, ...) 
 {
     par(bg = bg)
 
@@ -62,7 +62,7 @@ function (longlat = list(world.h.land, world.h.lake, world.h.island, world.h.pon
 
              imap.ll(longlat[[i]][['ll']], longrange, latrange, add = ifelse(add.all, TRUE, ifelse(i == 1, 
                 FALSE, TRUE)), zoom = FALSE, col = longlat[[i]][['col']], poly = ifelse(fill, longlat[[i]][['poly']], NA),
-                lwd = longlat[[i]][['lwd']], ...), 
+                lwd = longlat[[i]][['lwd']], cex.xlab = cex.xlab, cex.ylab = cex.ylab, cex.axis = cex.axis, lwd.ticks = lwd.ticks, ...), 
               
         ncol = 2), col=longlat[[i]][['col']], lwd=longlat[[i]][['lwd']], poly = longlat[[i]][['poly']])
    }   
@@ -88,4 +88,5 @@ function (longlat = list(world.h.land, world.h.lake, world.h.island, world.h.pon
 
     invisible(ll.out)
 }
+
 
