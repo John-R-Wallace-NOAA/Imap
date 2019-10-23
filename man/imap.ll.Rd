@@ -9,7 +9,8 @@ imap.ll() is the underlying mapping function that is called by imap() for each i
 }
 \usage{
 imap.ll(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", 
-       grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, ...)
+       grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, 
+       cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, ...)
 
 select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map",
        grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.005, ...)
@@ -18,7 +19,7 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
   \item{area}{
       A 2 dimension matrix or data frame with the first column the longitude or x-axis column and the second column the latitude or y-axis column.
       A simple two item list where the first item is the longitude (or x) and the second item is the latitude (or y) can also be supplied.  As with 
-      the lines() function a row of NA's will produce a break in the lines (equivalent to a pen-up on a plotter).
+      the lines() function a row of NAs will produce a break in the lines (equivalent to a pen-up on a plotter).
 }
   \item{longrange}{
      The initial longitudinal or x-axis range to be plotted.
@@ -65,13 +66,25 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
      The tolerance used when double left clicking on the same spot to reset the data.  If very low values of data are supplied or the zooming in is
      extreme, this value may need to be lowered.  Default is 0.05 .
 }
+  \item{cex.xlab}{
+     Character expansion for the 'x axis' label.
+}
+  \item{cex.ylab}{
+     Character expansion for the 'y axis' label.
+}
+  \item{cex.axis}{
+     Character expansion for the tick-mark labels.
+}
+  \item{lwd.ticks}{
+     Line width of the tick marks.
+}
   \item{\dots}{
           Any extra arguments are checked the a 'plt.' prefix.  Any such argument will be applied to the plot() function, all others will be applied to the
      lines() function. (For those looking to see how this was done, look at the top of the imap.ll() function and search on 'plot.dots' and 'lines.dots')
 }
 }
 \details{
-The function select.lines has similar argumnets to imap.ll but is used to select line seqments. See the Examples Section.
+The function select.lines has similar arguments to imap.ll but is used to select line seqments. See the Examples Section.
 }
 \value{
 Only data contained within the last area to be zoomed in on is invisibly returned as a (n x 2) matrix.
