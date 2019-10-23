@@ -11,7 +11,8 @@ Zoom in and out of maps or any supplied lines or points with control for color, 
 \usage{
 imap(longlat = list(world.h.land, world.h.lake, world.h.island, world.h.pond.in.island, world.h.borders), 
         longrange, latrange, zoom = TRUE, col = c("black", "blue", "forestgreen", "dodgerblue", "cyan"), fill = TRUE, 
-        poly = c("grey40", "blue", "forestgreen", "dodgerblue", NA), lwd = 1, keep.attr = TRUE, add.all = FALSE, bg = "grey81", tol = 0.05, ...)
+        poly = c("grey40", "blue", "forestgreen", "dodgerblue", NA), lwd = 1, keep.attr = TRUE, add.all = FALSE, bg = "grey81", tol = 0.05, 
+        cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, ...)
 
 
 ilines(..., fill = FALSE, aspect = 2)
@@ -22,7 +23,7 @@ ipts(longlat = npacific, axes = 'std', ...)
   \item{longlat}{
      Two dimensional user supplied data in the form of a matrix, dataframe, a list of of such data, or a list of lists as returned by
      this function (see Value).  The first column should be the longitude or x-axis column and the second the latitude or y-axis column.
-     As with the lines() function a row of NA's will produce a break in the line (equivalent to a pen-up on a plotter).
+     As with the lines() function a row of NAs will produce a break in the line (equivalent to a pen-up on a plotter).
 }
   \item{longrange}{
      The initial longitudinal or x-axis range to be plotted.
@@ -64,11 +65,23 @@ ipts(longlat = npacific, axes = 'std', ...)
      The tolerance used when double left clicking on the same spot to reset the data.  If very low values of data are supplied or zooming in is
      extreme, this value may need to be lowered.  Default is 0.05 .
 }
+  \item{cex.xlab}{
+     Character expansion for the 'x axis' label.
+}
+  \item{cex.ylab}{
+     Character expansion for the 'y axis' label.
+}
+  \item{cex.axis}{
+     Character expansion for the tick-mark labels.
+}
+  \item{lwd.ticks}{
+     Line width of the tick marks.
+}
   \item{\dots}{
      Any extra arguments are checked for the 'plt.' prefix.  Any such argument will be applied to the plot() function, all others will be applied to the
      lines() function. (For those wanting to know how this was done, look at the top of the imap.ll() function and search on 'plot.dots' and 'lines.dots'.)
 }
-  \item{aspect}{
+ \item{aspect}{
      See the help for imap.ll() for information on the 'aspect' argument.
 }
   \item{axes}{
