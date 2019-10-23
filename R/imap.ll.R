@@ -1,5 +1,5 @@
 imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", 
-    grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, ...) 
+    grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, ...) 
 {
     all.dots <- list(...)
     plot.dots <- all.dots[grepl("plt.", names(all.dots))]
@@ -61,24 +61,25 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
         yaxp <- par()$yaxp
         yticks <- round(seq(yaxp[1], yaxp[2], len = yaxp[3] + 1), 5)
         if (axes == "map") {
-            do.call(plot, c(list(x = longrange, y = latrange, xlab = "Longitude", ylab = "Latitude", type = "n", xaxt = "n", yaxt = "n"), plot.dots))
+            do.call(plot, c(list(x = longrange, y = latrange, xlab = list("Longitude", cex = cex.xlab), ylab = list("Latitude", cex = cex.ylab), type = "n", xaxt = "n", yaxt = "n"), plot.dots))
             long.labels <- ifelse(abs(xticks) == 180, "180", ifelse(xticks == 0, "0", ifelse(xticks > 0, paste(xticks, "E", sep = ""), 
                 ifelse(xticks < -180, paste(xticks + 360, "E", sep = ""), paste(-xticks, "W", sep = "")))))
             lat.labels <- ifelse(yticks == 0, "0", ifelse(yticks > 0, paste(yticks, ifelse(oz, "S", "N"), sep = ""), paste(-yticks, ifelse(oz, "N", "S"), sep = "")))
-            axis(1, at = xticks, labels = long.labels)
-            axis(3, at = xticks, labels = long.labels, mgp = c(3, 0.5, 0))
-            axis(2, at = yticks, labels = lat.labels, srt = 90)
-            axis(4, at = yticks, labels = lat.labels, srt = 90)
+            axis(1, at = xticks, labels = long.labels, cex.axis = cex.axis, lwd.ticks = lwd.ticks)
+            axis(3, at = xticks, labels = long.labels, mgp = c(3, 0.5, 0), cex.axis = cex.axis, lwd.ticks = lwd.ticks)
+            axis(2, at = yticks, labels = lat.labels, srt = 90, cex.axis = cex.axis, lwd.ticks = lwd.ticks)
+            axis(4, at = yticks, labels = lat.labels, srt = 90, cex.axis = cex.axis, lwd.ticks = lwd.ticks)
         }
         if (axes == "latOnly") {
-            do.call(plot, c(list(x = longrange, y = latrange, xlab = "", ylab = "Latitude", type = "n", xaxt = "n", yaxt = "n"), plot.dots))
+            do.call(plot, c(list(x = longrange, y = latrange, xlab = "", ylab = list("Latitude", cex = cex.ylab), type = "n", xaxt = "n", yaxt = "n"), plot.dots))
             lat.labels <- ifelse(yticks == 0, "0", ifelse(yticks > 0, paste(yticks, ifelse(oz, "S", "N"), sep = ""), paste(-yticks, ifelse(oz, "N", "S"), sep = "")))
-            axis(2, at = yticks, labels = lat.labels, srt = 90)
-            axis(4, at = yticks, labels = lat.labels, srt = 90)
+            # print(yticks); print(lat.labels)
+            axis(2, at = yticks, labels = lat.labels, srt = 90, cex.axis = cex.axis, lwd.ticks = lwd.ticks)
+            axis(4, at = yticks, labels = lat.labels, srt = 90, cex.axis = cex.axis, lwd.ticks = lwd.ticks)
         }
         if (axes == "std") 
-            do.call(plot, c(list(x = longrange, y = latrange, xlab = ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][1]), 
-               ylab = ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][2])), type = "n", plot.dots))
+            do.call(plot, c(list(x = longrange, y = latrange, xlab = list(ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][1]), cex = cex.xlab), 
+               ylab = list(ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][2]), cex = cex.ylab)), type = "n", plot.dots))
         if (grid) 
             abline(v = xticks, h = yticks, lty = 2, lwd = 0)
     }
@@ -124,4 +125,5 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
     }
     invisible(matrix(z.area, ncol = 2))
 }
+
 
