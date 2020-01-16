@@ -16,16 +16,16 @@ gdist.total(longlat, units = "nm", segments = TRUE, digits = 2)
 }
 \arguments{
   \item{lon.1}{
-Longitude of the first point.
+Longitude of the first point or vector points.
 }
   \item{lat.1}{
-Latitude of the first point.
+Latitude of the first point or vector points.
 }
   \item{lon.2}{
-Longitude of the second point.
+Longitude of the second point or vector points.
 }
   \item{lat.2}{
-Latitude of the second point.
+Latitude of the second point or vector points.
 }
   \item{units}{
 Any one of "nm": nautical miles (the default), "m": meters, "km": kilometers, or "miles": miles, for units of the returned value.
