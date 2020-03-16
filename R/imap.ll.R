@@ -1,10 +1,11 @@
-imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", 
-    grid = FALSE, aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, ...) 
+imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", grid = FALSE, grid.col = 'grey90',
+    aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, last = TRUE, ...) 
 {
     all.dots <- list(...)
     plot.dots <- all.dots[grepl("plt.", names(all.dots))]
     names(plot.dots) <- substring(names(plot.dots), 5)
     lines.dots <- all.dots[!grepl("plt.", names(all.dots))]
+    
     if (is.data.frame(area)) 
         area <- as.matrix(area)
     if (is.matrix(area)) {
@@ -80,8 +81,6 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
         if (axes == "std") 
             do.call(plot, c(list(x = longrange, y = latrange, xlab = list(ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][1]), cex = cex.xlab), 
                ylab = list(ifelse(is.null(dimnames(area)[[2]]), "", dimnames(area)[[2]][2]), cex = cex.ylab)), type = "n", plot.dots))
-        if (grid) 
-            abline(v = xticks, h = yticks, lty = 2, lwd = 0)
     }
     lat[is.na(lat)] <- latrange[1] + .Machine$double.eps
     long[is.na(long)] <- longrange[1] + .Machine$double.eps
@@ -96,14 +95,28 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
     "print(c(length(tf), sum(tf)))"
     "print(sum(tf)/length(tf))"
     if(lines.out.of.bounds) {
-        do.call(lines, c(list(x = long, y = lat), lines.dots))
         if(!is.na(poly))
              polygon(x = long, y = lat, col = poly, border = NA)
+         do.call(lines, c(list(x = long, y = lat), lines.dots))    
     } else {
-        do.call(lines, c(list(x = long[tf][tf.na], y = lat[tf][tf.na]), lines.dots))
         if(!is.na(poly))
              polygon(x = long[tf][tf.na], y = lat[tf][tf.na], col = poly, border = NA)
+        do.call(lines, c(list(x = long[tf][tf.na], y = lat[tf][tf.na]), lines.dots))    
+      cat("\n\nNew Edits\n\n")        
     } 
+    
+    if (grid & last) {
+        xaxp <- par()$xaxp
+        xticks <- round(seq(xaxp[1], xaxp[2], len = xaxp[3] + 1), 5)
+        yaxp <- par()$yaxp
+        yticks <- round(seq(yaxp[1], yaxp[2], len = yaxp[3] + 1), 5)
+        
+        if(axes == 'latOnly') 
+           abline(h = yticks, lty = 1, lwd = 0, col = grid.col) 
+        else    
+            bline(v = xticks, h = yticks, lty = 1, lwd = 0, col = grid.col)   
+    }     
+  
     z.area <- area[tf, drop = TRUE][tf.na, drop = FALSE]
 
     if (zoom) {
@@ -125,5 +138,6 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
     }
     invisible(matrix(z.area, ncol = 2))
 }
+
 
 
