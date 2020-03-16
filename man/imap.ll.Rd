@@ -45,14 +45,17 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
      will give no axes, labels, nor outside box.
 }
   \item{grid}{
-     If TRUE a thin dashed grid will be shown. Default in FALSE.
+     If TRUE thin grid lines will be shown. Default is FALSE.
+}
+  \item{grid.col}{
+     The color for the grid lines when grid = TRUE. Default is col.alpha("grey34").
 }
   \item{aspect}{
     A figure aspect for which larger values mean the figure will be more high than wide. Lower values will give a figure that is wider than high.
     The default is 1.5.
 }
   \item{add}{
-     If TRUE, 'area' will added to the current plot.  Default if FALSE.
+     If TRUE, 'area' will added to the current plot.  Default is FALSE.
 }
   \item{zoom}{
      If TRUE (default) the zooming feature will be enabled.  Zooming is accomplished by left-clicking in two different locations on the figure to define a

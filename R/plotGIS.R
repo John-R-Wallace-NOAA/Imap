@@ -1,5 +1,5 @@
 plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, verbose = FALSE, quiet = TRUE, landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
+    layer = c('ETOPO1_ice_surface', 'crm', 'socal_1as')[1], autoLayer = ifelse(missing(layer), TRUE, FALSE), verbose = TRUE, quiet = TRUE, landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
     cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue",
     "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
     lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500),
@@ -36,17 +36,32 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
     maxLat <- latrange[2]
      
     if (is.null(Fname)) {
-        if (all(Long > -162.000416666667) & all(Long < -63.9995833372533) & all(Lat > 15.9995833344534) & all(Lat < 49.0004166664667) & autoLayer) 
+        if (all(Long > -162.000416666667) & all(Long < -63.9995833372533) & all(Lat > 15.9995833344534) & all(Lat < 49.0004166664667) & autoLayer) # The West Coast of the contiguous USA
             layer <- 'crm'
-        if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 30.99972218222) & all(Lat < 36.99972223022) & autoLayer) 
-            layer <- 'SoCal_1as'
-        Rez <- 1/c(60, 60, 1200, 3600)[c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as') %in% layer]
-        if(verbose) cat("\n\nlayer = ", layer, " with ", 3600 * Rez, "-second resolution\n\n", sep="")        
+        if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 30.99972218222) & all(Lat < 36.99972223022) & autoLayer) # Southern California Bight with 1 arc-sec resolution
+            layer <- 'socal_1as'
+        # Rez <- 1/c(60, 60, 1200, 3600)[c('ETOPO1_ice_surface', 'ETOPO1_bedrock', 'crm', 'socal_1as') %in% layer] # Use this line if ETOPO1_bedrock is fixed
+        Rez <- 1/c(60, 1200, 3600)[c('ETOPO1_ice_surface', 'crm', 'socal_1as') %in% layer]  
+         
+        if(verbose) cat("\n\nlayer = ", layer, " with ", 3600 * Rez, "-second resolution\n\n", sep="") 
+
+        if(layer %in% c('ETOPO1_ice_surface'))  # ETOPO1_bedrock is currently the same as ETOPO1_ice_surface 
+
+          URL <- paste0("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/", layer, "/ImageServer/exportImage?bbox=",
+          minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&imageSR=4326&format=tiff&pixelType=S16&interpolation=+RSP_NearestNeighbor&compression=LZW&f=image")
+
+        else {
         
-        URL <- paste0("https://gis.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
-                "wcs.groovy?filename=", layer, ".tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
-                "coverage=", layer, "&CRS=EPSG:4326&format=geotiff&", 
-                "resx=", Rez, "&resy=", Rez, "&bbox=", minLon, ",", minLat, ",", maxLon, ",", maxLat)                
+          if(layer %in% c('crm', 'socal_1as'))  # socal_3as is currently the same as socal_1as, but the Coastal Relief Model (crm) is 3 arc-secs
+        
+          URL <- paste0("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_all/ImageServer/exportImage?bbox=",
+              minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&imageSR=4326&format=tiff&pixelType=F32&interpolation=+RSP_NearestNeighbor&compression=", 
+              "LZW&mosaicRule={%22mosaicMethod%22:%22esriMosaicAttribute%22,%22where%22:%22name=%27", layer, "%27%22}&f=image")
+
+         else  
+           stop("Check the name of layer argument")     
+       }
+                
         if(!quiet) cat("\n\nURL =", URL, "\n\n") 
                  
         Fname <- "TMP.tif"
@@ -83,3 +98,4 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
         plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
     }
 }
+
