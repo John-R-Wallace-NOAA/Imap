@@ -1,4 +1,4 @@
-imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", grid = FALSE, grid.col = 'grey90',
+imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic = FALSE, arctic = FALSE, oz = FALSE, axes = "map", grid = FALSE, grid.col = col.alpha('grey34'),
     aspect = 1.5, add = FALSE, zoom = TRUE, lines.out.of.bounds = TRUE, tol = 0.05, cex.xlab = 1, cex.ylab = 1, cex.axis = 1, lwd.ticks = 1, last = TRUE, ...) 
 {
     all.dots <- list(...)
