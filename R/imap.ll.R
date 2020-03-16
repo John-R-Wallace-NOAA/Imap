@@ -114,7 +114,7 @@ imap.ll <- function (area = npacific, longrange, latrange, poly = NA, antarctic 
         if(axes == 'latOnly') 
            abline(h = yticks, lty = 1, lwd = 0, col = grid.col) 
         else    
-            bline(v = xticks, h = yticks, lty = 1, lwd = 0, col = grid.col)   
+           abline(v = xticks, h = yticks, lty = 1, lwd = 0, col = grid.col)   
     }     
   
     z.area <- area[tf, drop = TRUE][tf.na, drop = FALSE]
