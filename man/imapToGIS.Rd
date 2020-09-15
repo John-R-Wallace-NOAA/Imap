@@ -35,13 +35,14 @@ imapToGIS()
 imapToGIS(autoLayer = F) 
 
 # Compare the bathymetry in Southern California with the 3 available resolutions. (Zoom into a smallish part of So. Cal. on the water with or without land.)
-BB <- imapToGIS(autoLayer = F) 
+BB <- imapToGIS(layer = 'ETOPO1_ice_surface') 
 dev.new()
-plotGIS(latrange = BB$latrange, longrange = BB$longrange, autoLayer = F, landOverlay = F, verbose = T) # Start over for the exact same look as below
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, layer = 'ETOPO1_ice_surface', landOverlay = F) # Start over with the first figure for the same look as below
 dev.new()
-plotGIS(latrange = BB$latrange, longrange = BB$longrange, layer = 'crm', autoLayer = F, landOverlay = F, verbose = T)
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, layer = 'crm', landOverlay = F)
 dev.new()
-plotGIS(latrange = BB$latrange, longrange = BB$longrange, landOverlay = F, verbose = T)
+plotGIS(latrange = BB$latrange, longrange = BB$longrange, landOverlay = F)
+
 }
 }
 
