@@ -1,6 +1,5 @@
 depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, Zero.to.NA = TRUE, 
-    plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
+    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), verbose = plot, quiet = TRUE, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
 {
     "  "
     "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
@@ -20,113 +19,43 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
         devtools::install_github("John-R-Wallace/JRWToolBox")
     JRWToolBox::lib(raster)
-    if (GoogleEarth) 
-        JRWToolBox::lib(plotKML)
-    if (plot3D) 
-        JRWToolBox::lib(rgl)
-    DepthM <- function(LongLat, blockSizeDegs = 0.01, method = "bilinear", 
-        plot = TRUE, quiet = TRUE) {
+      
+    DepthM <- function(LongLat, blockSizeDegs = 0.01, method = "bilinear", plot = TRUE, verbose = TRUE, quiet = FALSE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) {
+   
         Long <- as.numeric(LongLat[1])
         Lat <- as.numeric(LongLat[2])
         minLon <- Long - blockSizeDegs/2
         maxLon <- Long + blockSizeDegs/2
         minLat <- Lat - blockSizeDegs/2
         maxLat <- Lat + blockSizeDegs/2
-        if (Long > -123 & Long < -115.999999944 & Lat > 30.99972218222 & 
-            Lat < 36.99972223022 & SoCal_1as) {
-            URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
-                "wcs.groovy?filename=socal_1as.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
-                "coverage=socal_1as&CRS=EPSG:4326&format=geotiff&", 
-                "resx=0.000277777780000&resy=0.000277777780000&bbox=", 
-                minLon, ",", minLat, ",", maxLon, ",", maxLat, 
-                sep = "")
-            if (plot3D) 
-                URL.xyz <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
-                  "wcs.groovy?filename=socal_1as.xyz&", "request=getcoverage&version=1.0.0&service=wcs&", 
-                  "coverage=socal_1as&CRS=EPSG:4326&format=xyz&", 
-                  "resx=0.000277777780000&resy=0.000277777780000&bbox=", 
-                  minLon, ",", minLat, ",", maxLon, ",", maxLat, 
-                  sep = "")
-            if (!quiet) 
-                cat("\n*** Using the SoCal 1 arcsec grid at (", 
-                  Long, ", ", Lat, ") the grid cell will extend ", 
-                  Imap::gdist(Long, Lat, Long + 1/3600, Lat, 
-                    units = "m"), " meters long going east to west, and ", 
-                  Imap::gdist(Long, Lat, Long, Lat + 1/3600, 
-                    units = "m"), " meters going south to north. ***\n\n", 
-                  sep = "")
-        }
-        else {
-            URL <- paste("http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/", 
-                "wcs.groovy?filename=crm.tif&", "request=getcoverage&version=1.0.0&service=wcs&", 
-                "coverage=crm&CRS=EPSG:4326&format=geotiff&", 
-                "resx=0.000833333333333334&resy=0.000833333333333334&bbox=", 
-                minLon, ",", minLat, ",", maxLon, ",", maxLat, 
-                sep = "")
-            if (plot3D) {
-                plot3D <- FALSE
-                warning("3D plotting only available with the 1 arcsec data in the CA Bight")
-            }
-            if (!quiet) 
-                cat("\n*** Using the US West Coast 3 arcsec grid at (", 
-                  Long, ", ", Lat, ") the grid cell will extend ", 
-                  Imap::gdist(Long, Lat, Long + 3/3600, Lat, 
-                    units = "m"), " meters long going east to west, and ", 
-                  Imap::gdist(Long, Lat, Long, Lat + 3/3600, 
-                    units = "m"), " meters going south to north. ***\n\n", 
-                  sep = "")
-        }
-        Fname <- "TMP.tif"
-        optUSR <- options(warn = -2)
-        on.exit(options(optUSR))
-        utils::download.file(URL, Fname, method = 'auto', mode = "wb", cacheOK = FALSE, 
-            quiet = quiet)
-        BathySmall <- raster::raster(Fname)
-        if (plot) {
-             raster::plot(BathySmall)
-             raster::contour(BathySmall, add = T)
-             Imap::ilines(Imap::world.h.land, longrange = c(minLon, 
-                maxLon), latrange = c(minLat, maxLat), add = T, 
-               zoom = F)
-             points(LongLat, col = "red", pch = 16)
-        }
-        if (plot3D) {
-            Fname.xyz <- "TMP_xyz.tif"
-            utils::download.file(URL.xyz, Fname.xyz, method = 'auto', mode = "wb", 
-                cacheOK = FALSE, quiet = quiet)
-            BathySmall.xyz <- read.table(Fname.xyz, head = F)
-            names(BathySmall.xyz) <- c("Longitude", "Latitude", 
-                "Elevation")
-            BathySmall.xyz$Splits <- factor.f(BathySmall.xyz$Elevation, 
-                  (max(BathySmall.xyz$Elevation, na.rm = T) - 
-                    min(BathySmall.xyz$Elevation, na.rm = T))/254)
-            colTable <- data.frame(Splits = levels(BathySmall.xyz$Splits), 
-               Color = rev(terrain.colors(255)))
-            BathySmall.xyz <- match.f(BathySmall.xyz, colTable, 
-               "Splits", "Splits", "Color")
-            plot3d(BathySmall.xyz, col = BathySmall.xyz$Color)
-        }
-        if (GoogleEarth) 
-                plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
-        ' '    
+       
+        BathySmall <- Imap::plotRAST(longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
+                               quiet = quiet, plot3D = plot3d, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
+        
+        if (plot)
+           points(LongLat, col = "red", pch = 16)
+        
         -raster::extract(BathySmall, LongLat, method = method)
-    }
-    '# End DepthM function'
+    }  
+    
     if (is.null(nrow(LongLat))) 
         LongLat <- as.data.frame(t(LongLat))
     N <- nrow(LongLat)
     Out <- rep(NA, N)
+    
     for (i in 1:N) {
         if (N >= 5) 
             JRWToolBox::bar(i, N)
-        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], blockSizeDegs = blockSizeDegs, 
-            method = method, plot = plot, quiet = quiet), silent = TRUE)
+        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, verbose = verbose, 
+                               quiet = quiet, plot3D = plot3d, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog), silent = TRUE)
     }
+    
     if (any(Out %in% 0) & Zero.to.NA) {
         Out[Out %in% 0] <- NA
-        warning("Depths equal to exactly zero were converted to NA.", 
-            call. = FALSE)
+        warning("Depths equal to exactly zero were converted to NA.", call. = FALSE)
     }
+    
     Out
 }
+
 

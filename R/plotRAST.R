@@ -1,13 +1,11 @@
-plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
+plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
     layer = c('ETOPO1_ice_surface', 'ETOPO1_bedrock', 'crm', 'socal_3as', 'socal_1as')[1], autoLayer = ifelse(missing(layer), TRUE, FALSE), URL = NULL, 
     verbose = TRUE, quiet = TRUE, landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, 
     cex.pts = 0.25, col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue",
     "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), alpha = 0.75, border.poly = NULL, 
     lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500),
-    GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
+    plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5, plot = TRUE, ...) 
 {
-    .Deprecated('plotRAST')
-    
     if (!any(installed.packages()[, 1] %in% "devtools")) 
         install.packages("devtools")
     if (!any(installed.packages()[, 1] %in% "JRWToolBox")) 
@@ -17,6 +15,9 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
     JRWToolBox::lib(sp)
     JRWToolBox::lib(rgdal)
     JRWToolBox::lib(grDevices)
+    
+    if (plot3D) 
+        JRWToolBox::lib(rgl)
     
     if (GoogleEarth) 
         JRWToolBox::lib(plotKML)
@@ -81,29 +82,47 @@ plotGIS <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124),
     
     # BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
     BathySmall <- raster::raster(Fname) # Can't override limits inside of Fname
+    # BathySmall.NA <- BathySmall
     raster::NAvalue(BathySmall) <- BathySmall@data@min
-    raster::plot(BathySmall, alpha = alphaRaster)
     
-    if (!is.null(levels.contour)) 
-        raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
-        
-    if (landOverlay) 
-        Imap::imap(list(Imap::world.h.land, Imap::world.h.borders), longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, zoom = F)
-        
-    if (plotPoints) 
-        points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= maxLat, ],
-               col = col.pts, pch = pch.pts, cex = cex.pts)
-               
-    if (!is.null(polygons)) {
-        col.poly <- rep(col.poly, length = length(polygons))
-        for (i in 1:length(polygons)) polygon(polygons[[i]], col = col.poly[i], border = border.poly, lwd = lwd.poly)
+    if(plot) {
+       raster::plot(BathySmall, alpha = alphaRaster)
+    
+       if (!is.null(levels.contour)) 
+           raster::contour(BathySmall, maxpixels = 5e+05, add = T, levels = levels.contour, ...)
+           
+       if (landOverlay) 
+           Imap::imap(list(Imap::world.h.land, Imap::world.h.borders), longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), add = T, poly = col.imap, zoom = F)
+           
+       if (plotPoints) 
+           points(LongLat[LongLat[, 1] >= minLon & LongLat[, 1] <= maxLon & LongLat[, 2] >= minLat & LongLat[, 2] <= maxLat, ],
+                  col = col.pts, pch = pch.pts, cex = cex.pts)
+                  
+       if (!is.null(polygons)) {
+           col.poly <- rep(col.poly, length = length(polygons))
+           for (i in 1:length(polygons)) polygon(polygons[[i]], col = col.poly[i], border = border.poly, lwd = lwd.poly)
+       }
+    }
+    
+    if (plot3D) {
+            xy <- xyFromCell(BathySmall, 1:ncell(BathySmall))
+            BathySmall.xyz <- data.frame(xy, z = c(t(raster::as.matrix(BathySmall))))
+            names(BathySmall.xyz) <- c("Longitude", "Latitude", "Elevation")
+            BathySmall.xyz$Splits <- factor.f(BathySmall.xyz$Elevation, 
+                  (max(BathySmall.xyz$Elevation, na.rm = T) - min(BathySmall.xyz$Elevation, na.rm = T))/254)
+            colTable <- data.frame(Splits = levels(BathySmall.xyz$Splits), Color = rev(terrain.colors(255)))
+            BathySmall.xyz <- match.f(BathySmall.xyz, colTable, "Splits", "Splits", "Color")
+            rgl::plot3d(BathySmall.xyz, col = BathySmall.xyz$Color)
     }
     
     if (GoogleEarth) {
-        assign("alphaGoog", alphaGoog, pos = 1)
-        plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
+           assign("alphaGoog", alphaGoog, pos = 1)
+           plotKML::plotKML(BathySmall, colour_scale = rev(terrain.colors(255)), alpha = alphaGoog)
     }
+   
+    invisible(BathySmall)
 }
+
 
 
 

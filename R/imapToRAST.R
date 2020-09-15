@@ -1,7 +1,6 @@
 
-imapToGIS <- function (landOverlay = FALSE, ...) 
+imapToRAST <- function (landOverlay = FALSE, ...) 
 {
-    .Deprecated('imapToRAST')
     Imap::imap()
     TMP <- par()$usr
     longrange <- TMP[1:2]
@@ -9,3 +8,4 @@ imapToGIS <- function (landOverlay = FALSE, ...)
     Imap::plotRAST(latrange = latrange, longrange = longrange, landOverlay = landOverlay,  ...)
     invisible(list(latrange = latrange, longrange = longrange))
 }
+
