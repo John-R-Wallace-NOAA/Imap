@@ -11,7 +11,7 @@ land overlay and the contour lines are bathymetric centric. (The overlay default
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, verbose = FALSE, quiet = TRUE, 
+    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, verbose = TRUE, quiet = TRUE, 
     landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
     col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
@@ -41,7 +41,7 @@ The default is 'etopo1, but this is changed when autoLayer is TRUE (its default)
 Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE.
 }
   \item{verbose}{
-Should information about the layer used be shown. Default is FALSE. 
+Should information about the layer used be shown. Default is TRUE. 
 }
   \item{quiet}{
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL used to extract the data not be shown. 
@@ -126,10 +126,13 @@ Therefore to see the help for \code{raster()}, either load the package or use: \
    plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
    draw.polygon('green') # Interactively draw a polygon filled with green (the default alpha level is 0.5)
 
-   # Compare Southern CA 1 arc-sec to 3 arc-sec data
+   # Compare Southern CA 1 arc-sec, 3 arc-sec of the Coastal Relief Model (crm), and 1 minute data of the ETOPO1 (with ice height on Greenland and Antarctica)
    plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
    dev.new()
-   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), SoCal_1as=FALSE)
+   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'crm')
+   dev.new()
+   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'ETOPO1_ice_surface')
+
    
    # Use imapToGIS() to zoom into an area which then will be replaced by a raster image with the same bounding box coordinates.
    imapToGIS()
