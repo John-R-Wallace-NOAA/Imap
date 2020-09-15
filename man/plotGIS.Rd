@@ -11,7 +11,7 @@ land overlay and the contour lines are bathymetric centric. (The overlay default
 }
 \usage{
 plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer = c('etopo1', 'etopo1_bedrock', 'crm', 'SoCal_1as')[1], autoLayer = TRUE, verbose = TRUE, quiet = TRUE, 
+    layer =c("ETOPO1_ice_surface", "crm", "socal_3as", "socal_1as")[1], autoLayer = ifelse(missing(layer), TRUE, FALSE), verbose = TRUE, quiet = TRUE, 
     landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
     col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
@@ -32,13 +32,14 @@ Longitudinal range of the figure to be plotted.
 Latitudinal range of the figure to be plotted.
 }
   \item{layer}{
-Which layer should be used: 'etopo1' = entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution), 
-'etopo1_bedrock' = entire Earth's surface with the bedrock underneath the ice sheets revealed (1-minute resolution),
-'crm' = Coastal Relief Model for the contiguous U.S. (3 arc-second resolution), or 'SoCal_1as' = Southern California (1 arc-second resolution). 
-The default is 'etopo1, but this is changed when autoLayer is TRUE (its default).
+Which layer should be used: 'ETOPO1_ice_surface' = Entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution),
+'crm' = Coastal Relief Model for the contiguous U.S. coastline (3 arc-second resolution), 'socal_3as' = Southern California (3 arc-second resolution), 
+or 'socal_1as' = Southern California (1 arc-second resolution). 
+The default is ETOPO1_ice_surface, but this can be changed when autoLayer is TRUE.
 }
   \item{autoLayer}{
-Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE.
+Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE if the 
+layer argument is not explictly given.
 }
   \item{verbose}{
 Should information about the layer used be shown. Default is TRUE. 
