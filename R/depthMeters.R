@@ -1,5 +1,5 @@
-depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), verbose = plot, quiet = TRUE, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
+depthMeters <- function (LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
+   method = "bilinear", verbose = plot, quiet = TRUE, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
 {
     "  "
     "  Examples: depthMeters(c(-125.6875, 48.14417)) # Auto plot and auto 0.5 or 2 deg. block; Depths <- depthMeters(NWDepth[1:10, c('BEST_LON_DD', 'BEST_LAT_DD')]) # Auto no plot and 0.005 deg block "
@@ -20,10 +20,15 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         devtools::install_github("John-R-Wallace/JRWToolBox")
     JRWToolBox::lib(raster)
       
-    DepthM <- function(LongLat, blockSizeDegs = 0.01, method = "bilinear", plot = TRUE, verbose = TRUE, quiet = FALSE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) {
+    DepthM <- function(LongLat, plot = TRUE, SoCal_1as = TRUE, blockSizeDegs = 0.01, method = "bilinear", verbose = TRUE, quiet = FALSE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) {
    
         Long <- as.numeric(LongLat[1])
         Lat <- as.numeric(LongLat[2])
+        if (Long > -123 & Long < -115.999999944 & Lat > 30.99972218222 & Lat < 36.99972223022 & SoCal_1as) # Southern California Bight with 1 arc-sec resolution
+              SoCal_1as <- TRUE
+        else
+              SoCal_1as <- FALSE      
+               
         minLon <- Long - blockSizeDegs/2
         maxLon <- Long + blockSizeDegs/2
         minLat <- Lat - blockSizeDegs/2
@@ -32,8 +37,10 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         BathySmall <- Imap::plotRAST(longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
                                quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
         
-        if (plot)
+        if (plot) {
            points(LongLat, col = "red", pch = 16)
+           cat("The default bounding box size when plotting is larger than the default box when not plotting, this may affect the depth value reported.\n\n")
+        }   
         
         -raster::extract(BathySmall, LongLat, method = method)
     }  
@@ -46,7 +53,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
     for (i in 1:N) {
         if (N >= 5) 
             JRWToolBox::bar(i, N)
-        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, verbose = verbose, 
+        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], plot = plot, SoCal_1as = SoCal_1as, blockSizeDegs = blockSizeDegs, method = method, verbose = verbose, 
                                quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog), silent = TRUE)
     }
     
@@ -57,5 +64,6 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
     
     Out
 }
+
 
 
