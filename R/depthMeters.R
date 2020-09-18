@@ -30,7 +30,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         maxLat <- Lat + blockSizeDegs/2
        
         BathySmall <- Imap::plotRAST(longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
-                               quiet = quiet, plot3D = plot3d, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
+                               quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
         
         if (plot)
            points(LongLat, col = "red", pch = 16)
@@ -47,7 +47,7 @@ depthMeters <- function (LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ife
         if (N >= 5) 
             JRWToolBox::bar(i, N)
         try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], blockSizeDegs = blockSizeDegs, method = method, plot = plot, verbose = verbose, 
-                               quiet = quiet, plot3D = plot3d, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog), silent = TRUE)
+                               quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog), silent = TRUE)
     }
     
     if (any(Out %in% 0) & Zero.to.NA) {
