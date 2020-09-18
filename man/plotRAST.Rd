@@ -111,6 +111,7 @@ Set the alpha transparency level for the raster image in Google Earth. The defau
 \value{
 A bathymetric figure is created with Long/Lat ranges given by 'longrange' and 'latrange' and contour lines with levels given by 'levels.contour'.  
 Optionally, 'LongLat' points and polygons in the 'polygons' list can be plotted over the bathymetry. 
+The raster file in invisibly returned.
 }
 \references{
 For getting the bathymetry into R, I followed Tom Wainwright's presentation: 
