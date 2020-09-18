@@ -1,21 +1,22 @@
-\name{plotGIS}
-\alias{plotGIS}
+\name{plotRAST}
+\alias{plotRAST}
 \title{
 Plot data from NOAA's National Centers for Environmental Information, including bathymetric information
 }
 \description{
-\code{plotGIS} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
+\code{plotRAST} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
 Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. The SoCal 1 arc-second data extends 
 to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.  Note also that the defaults for 
-land overlay and the contour lines are bathymetric centric. (The overlay default for \code{imapToGIS} is not bathymetric centric.)
+land overlay (set to TRUE) and the contour lines are bathymetric centric. (The land overlay default for \code{imapToRAST} is FALSE and contour lines on both 
+land and sea are shown.)
 }
 \usage{
-plotGIS(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
-    layer =c("ETOPO1_ice_surface", "crm", "socal_3as", "socal_1as")[1], autoLayer = ifelse(missing(layer), TRUE, FALSE), verbose = TRUE, quiet = TRUE, 
-    landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
-    col.poly = col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
+plotRAST(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
+    layer =c("ETOPO1_ice_surface", 'ETOPO1_bedrock', "crm", "socal_3as", "socal_1as")[1], autoLayer = ifelse(missing(layer), TRUE, FALSE), URL = NULL, verbose = TRUE, 
+    quiet = TRUE, landOverlay = TRUE, col.imap = "grey40", alphaRaster = 1, col.pts = "red", pch.pts = 16, cex.pts = 0.25, 
+    col.poly = Imap::col.alpha((grDevices::colorRampPalette(colors = c("darkblue", "blue", "lightblue", "lightgreen", "yellow", "orange", "red")))(length(polygons)), alpha), 
     alpha = 0.75, border.poly = NULL, lwd.poly = 1.5, Fname = NULL, levels.contour = if(landOverlay) seq(-100, -2000, by = -100) else seq(-11000, 9000, by = 500), 
-    GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
+    plot = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5, ...) 
 }
 \arguments{
   \item{LongLat}{
@@ -33,6 +34,7 @@ Latitudinal range of the figure to be plotted.
 }
   \item{layer}{
 Which layer should be used: 'ETOPO1_ice_surface' = Entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution),
+'ETOPO1_bedrock' = Entire Earth's surface with bedrock depcted on Antarctic and Greenland (1-minute resolution),
 'crm' = Coastal Relief Model for the contiguous U.S. coastline (3 arc-second resolution), 'socal_3as' = Southern California (3 arc-second resolution), 
 or 'socal_1as' = Southern California (1 arc-second resolution). 
 The default is ETOPO1_ice_surface, but this can be changed when autoLayer is TRUE.
@@ -41,9 +43,12 @@ The default is ETOPO1_ice_surface, but this can be changed when autoLayer is TRU
 Should the Coastal Relief (3 arc-second) and Southern California (1 arc-second) layers (see the references) be used when possible. The default is TRUE if the 
 layer argument is not explictly given.
 }
-  \item{verbose}{
-Should information about the layer used be shown. Default is TRUE. 
+ \item{URL}{
+An URL from which a raster file can be downloaded. When URL is NULL (the default), the URL is generated from NOAA's NCEI Grid Extract website and the lat/long ranges.
 }
+ \item{verbose}{
+Should information about the layer used be shown. Default is TRUE. 
+} 
   \item{quiet}{
 Should the \code{download.file} function from the \code{utils} package be quiet when downloading the bathymetry data and the URL used to extract the data not be shown. 
 the default is TRUE.
@@ -51,7 +56,7 @@ the default is TRUE.
   \item{landOverlay}{
 Should the \code{imap} function be used for a land overlay. Default is TRUE. 
 }
-\item{col.imap}{
+ \item{col.imap}{
 Color of the imap() land overlay. Default is "grey40".
 }
   \item{alphaRaster}{
@@ -90,11 +95,17 @@ a reasonable internet connection is rarely needed.
    \item{levels.contour}{
 The levels, in meters, of the contour lines to plot.
 }
+  \item{plot}{
+Plot a raster image using the 'raster' package. The default is TRUE.
+}
+  \item{plot3D}{
+Plot a 3D cloud of color banded points using the 'rgl' package. The default is FALSE.
+}
    \item{GoogleEarth}{
 Show the raster image (converted to KML format) in Google Earth. The default is FALSE. 
 }
  \item{alphaGoog}{
-Set the alpha transparency level for the raster image in Google Earth. The default is 0.5 .
+Set the alpha transparency level for the raster image in Google Earth. The default is 0.5.
 }
 }
 \value{
@@ -118,24 +129,24 @@ Therefore to see the help for \code{raster()}, either load the package or use: \
 }
 \examples{
 \dontrun{
-   plotGIS(latrange = c(46, 48), longrange = c(-126, -123.8))
+   plotRAST(latrange = c(46, 48), longrange = c(-126, -123.8))
    
    temp.poly <- list(data.frame(x= c( -125, -125, -124.6, -124.6, -125), y = c(42.2, 42, 42, 42.2, 42.2)), 
                     data.frame(x= c( -124.8, -124.8, -124.4, -124.4, -124.8), y = c(42.1, 41.9, 41.9, 42.1, 42.1)))
 
-   plotGIS(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
+   plotRAST(polygons = temp.poly, col.poly = c(col.alpha('blue', 0.5), col.alpha('red', 0.5)), border.poly='black', lwd.poly=2)
    draw.polygon('green') # Interactively draw a polygon filled with green (the default alpha level is 0.5)
 
    # Compare Southern CA 1 arc-sec, 3 arc-sec of the Coastal Relief Model (crm), and 1 minute data of the ETOPO1 (with ice height on Greenland and Antarctica)
-   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
+   plotRAST(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3))
    dev.new()
-   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'crm')
+   plotRAST(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'crm')
    dev.new()
-   plotGIS(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'ETOPO1_ice_surface')
+   plotRAST(longrange = c(-120.25, -119.7), latrange = c(32.7, 33.3), layer = 'ETOPO1_ice_surface')
 
    
-   # Use imapToGIS() to zoom into an area which then will be replaced by a raster image with the same bounding box coordinates.
-   imapToGIS()
+   # Use imapToRAST() to zoom into an area which then will be replaced by a raster image with the same bounding box coordinates.
+   imapToRAST()
 }
 }
 
