@@ -1,37 +1,39 @@
 \name{depthMeters}
 \alias{depthMeters}
 \title{
-Depth in meters off the West Coast of the contiguous U.S.
+Depth in meters given a latitude and longitude point.
 }
 \description{
-\code{depthMeters} gives the depth, in meters, using areas vol 6 and 7 in NOAA's U.S. Coastal Relief Model. Note that, even though
-the SoCal 1 Arc-Second extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage goes further 
+\code{depthMeters} gives the depth, in meters, using data from NOAA NCEI's Grid Extraction. Note that, even though
+the SoCal 1 Arc-Second data extends to the southeastern corner of U.S. West Cost EEZ, the SoCal 3 Arc-Second coverage goes further 
 south and west.
 }
 \usage{
-depthMeters(LongLat = c(-120, 33), blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
-    SoCal_1as = TRUE, method = "bilinear", plot = ifelse(N < 5, TRUE, FALSE), quiet = !plot, OuterIndex = 1, 
-    Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5)  
+depthMeters(LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, 
+     blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002), method = "bilinear", 
+      verbose = plot, quiet = !plot, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5)  
 }
 \arguments{
   \item{LongLat}{
 A single long/lat vector or a matrix or data frame with longitude in the first column and latitude in the second column.
 }
-  \item{blockSizeDegs}{
-The block size, in degrees, over which the depth is extracted.  
-The default is 0.5 degrees on a side for the 1 Arc-Second volume 6 covering southern California and 2 degrees for 
-the 3 Arc-Second volume 7 covering the entire West Coast of the contigous U.S.
-}
-  \item{SoCal_1as}{
-Should 1 Arc-Second volume 6 be used. The default is TRUE.
-}
-  \item{method}{
-Method used to extract the depth from a Raster object using the \code{extract} function in the \code{raster} package. 
-Defaults to 'bilinear'.
-}
   \item{plot}{
 Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is TRUE when the
 number of depths asked for is less than 5 and FALSE otherwise.
+}
+  \item{SoCal_1as}{
+Should should a smaller bounding box be used when the longlat point is within the Southern Cali 1 Arc-Sec data. The default is TRUE.
+}
+  \item{blockSizeDegs}{
+The block size, in degrees, over which the depth is extracted.  
+The default when plotting is 0.5 degrees on a side for the 1 Arc-Second data covering southern California and 2 degrees otherwise.
+The default when not plotting is 0.005 degrees on a side for the 1 Arc-Second data covering southern California and 0.002 degrees otherwise.
+ \item{method}{
+Method used to extract the depth from a Raster object using the \code{extract} function in the \code{raster} package. 
+Defaults to 'bilinear'.
+}
+  \item{verbose}{
+Should information about the layer used be shown. Default is equal to the 'plot' augument.
 }
   \item{quiet}{
 Should addition information be surpressed. Defaults to the logical negation of the 'plot' augument.
