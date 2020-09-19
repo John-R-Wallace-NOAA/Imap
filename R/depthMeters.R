@@ -1,4 +1,5 @@
-depthMeters <- function (LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
+depthMeters <- function (LongLat = c(-120, 33), layer = c('ETOPO1_ice_surface', 'ETOPO1_bedrock', 'crm', 'socal_3as', 'socal_1as')[1], 
+   plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002)), 
    method = "bilinear", verbose = plot, quiet = TRUE, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) 
 {
     "  "
@@ -20,7 +21,7 @@ depthMeters <- function (LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE
         devtools::install_github("John-R-Wallace/JRWToolBox")
     JRWToolBox::lib(raster)
       
-    DepthM <- function(LongLat, plot = TRUE, SoCal_1as = TRUE, blockSizeDegs = 0.01, method = "bilinear", verbose = TRUE, quiet = FALSE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) {
+    DepthM <- function(LongLat, layer = 'ETOPO1_ice_surface', plot = TRUE, SoCal_1as = TRUE, blockSizeDegs = 0.01, method = "bilinear", verbose = TRUE, quiet = FALSE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5) {
    
         Long <- as.numeric(LongLat[1])
         Lat <- as.numeric(LongLat[2])
@@ -34,7 +35,7 @@ depthMeters <- function (LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE
         minLat <- Lat - blockSizeDegs/2
         maxLat <- Lat + blockSizeDegs/2
        
-        BathySmall <- Imap::plotRAST(longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
+        BathySmall <- Imap::plotRAST(layer = layer, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
                                quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
         
         if (plot) {
@@ -53,7 +54,7 @@ depthMeters <- function (LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE
     for (i in 1:N) {
         if (N >= 5) 
             JRWToolBox::bar(i, N)
-        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], plot = plot, SoCal_1as = SoCal_1as, blockSizeDegs = blockSizeDegs, method = method, verbose = verbose, 
+        try(Out[i] <- DepthM(LongLat[i, , drop = FALSE], layer = layer, plot = plot, SoCal_1as = SoCal_1as, blockSizeDegs = blockSizeDegs, method = method, verbose = verbose, 
                                quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog), silent = TRUE)
     }
     

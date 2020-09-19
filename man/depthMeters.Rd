@@ -9,13 +9,19 @@ the SoCal 1 Arc-Second data extends to the southeastern corner of U.S. West Cost
 south and west.
 }
 \usage{
-depthMeters(LongLat = c(-120, 33), plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, 
+depthMeters(LongLat = c(-120, 33), layer = layer, plot = ifelse(N < 5, TRUE, FALSE), SoCal_1as = TRUE, 
      blockSizeDegs = ifelse(plot, ifelse(SoCal_1as, 0.5, 2), ifelse(SoCal_1as, 0.005, 0.002), method = "bilinear", 
       verbose = plot, quiet = !plot, Zero.to.NA = TRUE, plot3D = FALSE, GoogleEarth = FALSE, alphaGoog = 0.5)  
 }
 \arguments{
   \item{LongLat}{
 A single long/lat vector or a matrix or data frame with longitude in the first column and latitude in the second column.
+}
+ \item{layer}{
+Which layer should be used: 'ETOPO1_ice_surface' = Entire Earth's surface with the top of the Antarctic and Greenland ice sheets depicted (1-minute resolution),
+'ETOPO1_bedrock' = Entire Earth's surface with bedrock depcted on Antarctic and Greenland (1-minute resolution),
+'crm' = Coastal Relief Model for the contiguous U.S. coastline (3 arc-second resolution), 'socal_3as' = Southern California (3 arc-second resolution), 
+or 'socal_1as' = Southern California (1 arc-second resolution). The default is ETOPO1_ice_surface.
 }
   \item{plot}{
 Should a plot be created showing the bathmetry and the point at which the depth is extracted. Default is TRUE when the
