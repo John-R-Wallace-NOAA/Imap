@@ -47,21 +47,22 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
                layer <- 'crm'
            if (all(Long > -123) & all(Long < -115.999999944) & all(Lat > 30.99972218222) & all(Lat < 36.99972223022) & autoLayer) # Southern California Bight with 1 arc-sec resolution
                layer <- 'socal_1as'
-           Rez <- 1/c(60, 60, 1200, 3600)[c('ETOPO1_ice_surface', 'ETOPO1_bedrock', 'crm', 'socal_1as') %in% layer]
+           ptsPerLat <- c(60, 60, 1200, 3600)[c('ETOPO1_ice_surface', 'ETOPO1_bedrock', 'crm', 'socal_1as') %in% layer]
       
-           if(verbose) cat("\n\nlayer = ", layer, " with ", 3600 * Rez, "-second resolution\n\n", sep="") 
+           if(verbose & 3600/ptsPerLat != 60) cat("\n\nlayer = ", layer, " with ", 3600/ptsPerLat, "-second resolution\n\n", sep="") 
+           if(verbose & 3600/ptsPerLat == 60) cat("\n\nlayer = ", layer, " with 1-minute resolution\n\n", sep="") 
         
            if(layer %in% c('ETOPO1_ice_surface', 'ETOPO1_bedrock')) 
            
               URL <- paste0("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/", layer, "/ImageServer/exportImage?bbox=",
-              minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&imageSR=4326&format=tiff&pixelType=S16&interpolation=+RSP_NearestNeighbor&compression=LZW&f=image")
+              minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&size=", ptsPerLat * (maxLon - minLon), ",", ptsPerLat * (maxLat - minLat), "&imageSR=4326&format=tiff&pixelType=S16&interpolation=+RSP_NearestNeighbor&compression=LZW&f=image")
            
            else {
            
              if(layer %in% c('crm', 'socal_3as', 'socal_1as')) 
                
                 URL <- paste0("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_all/ImageServer/exportImage?bbox=",
-                   minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&imageSR=4326&format=tiff&pixelType=F32&interpolation=+RSP_NearestNeighbor&compression=", 
+                   minLon, ",", minLat, ",", maxLon, ",", maxLat, "&bboxSR=4326&size=", ptsPerLat * (maxLon - minLon), ",", ptsPerLat * (maxLat - minLat), "&imageSR=4326&format=tiff&pixelType=F32&interpolation=+RSP_NearestNeighbor&compression=", 
                    "LZW&mosaicRule={%22mosaicMethod%22:%22esriMosaicAttribute%22,%22where%22:%22name=%27", layer, "%27%22}&f=image")
                
              else  
@@ -122,6 +123,7 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
    
     invisible(BathySmall)
 }
+
 
 
 

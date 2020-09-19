@@ -34,6 +34,7 @@ Should should a smaller bounding box be used when the longlat point is within th
 The block size, in degrees, over which the depth is extracted.  
 The default when plotting is 0.5 degrees on a side for the 1 Arc-Second data covering southern California and 2 degrees otherwise.
 The default when not plotting is 0.005 degrees on a side for the 1 Arc-Second data covering southern California and 0.002 degrees otherwise.
+}
  \item{method}{
 Method used to extract the depth from a Raster object using the \code{extract} function in the \code{raster} package. 
 Defaults to 'bilinear'.

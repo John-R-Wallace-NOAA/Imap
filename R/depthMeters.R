@@ -35,7 +35,7 @@ depthMeters <- function (LongLat = c(-120, 33), layer = c('ETOPO1_ice_surface', 
         minLat <- Lat - blockSizeDegs/2
         maxLat <- Lat + blockSizeDegs/2
        
-        BathySmall <- Imap::plotRAST(layer = layer, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
+        BathySmall <- Imap::plotRAST(layer = layer, autoLayer = TRUE, longrange = c(minLon, maxLon), latrange = c(minLat, maxLat), plot = plot, verbose = verbose, 
                                quiet = quiet, plot3D = plot3D, GoogleEarth = GoogleEarth, alphaGoog = alphaGoog)
         
         if (plot) {
@@ -65,6 +65,7 @@ depthMeters <- function (LongLat = c(-120, 33), layer = c('ETOPO1_ice_surface', 
     
     Out
 }
+
 
 
 
