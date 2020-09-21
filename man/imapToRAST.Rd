@@ -32,8 +32,17 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 imapToRAST()
 
 # For faster download times, use the 'etopo1' layer with its lower resolution for all areas.
-imapToRAST(autoLayer = F) 
+imapToRAST(autoLayer = FALSE) 
 
+  
+# Compare the bathymetry of the ice sheet in Greenland with the bedrock underneath. After imapToRAST() is run, use the zoom tool of imap() create a bounding box around all of Greenland.
+(BB <- imapToRAST())   # Default is ETOPO1_ice_surface
+dev.new()
+plotRAST(latrange = BB$latrange, longrange = BB$longrange, layer = 'ETOPO1_ice_surface', landOverlay = F) # Start over with the first figure for the same look as below
+dev.new()
+plotRAST(latrange = BB$latrange, longrange = BB$longrange, layer = 'ETOPO1_bedrock', landOverlay = F)
+  
+  
 # Compare the bathymetry in Southern California with the 3 available resolutions. (Zoom into a smallish part of So. Cal. on the water with or without land.)
 BB <- imapToRAST(layer = 'ETOPO1_ice_surface') 
 dev.new()
