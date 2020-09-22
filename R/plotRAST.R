@@ -106,13 +106,13 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
     }
     
     if (plot3D) {
-            xy <- xyFromCell(BathySmall, 1:ncell(BathySmall))
+            xy <- raster::xyFromCell(BathySmall, 1:ncell(BathySmall))
             BathySmall.xyz <- data.frame(xy, z = c(t(raster::as.matrix(BathySmall))))
             names(BathySmall.xyz) <- c("Longitude", "Latitude", "Elevation")
-            BathySmall.xyz$Splits <- factor.f(BathySmall.xyz$Elevation, 
+            BathySmall.xyz$Splits <- JRWToolBox::factor.f(BathySmall.xyz$Elevation, 
                   (max(BathySmall.xyz$Elevation, na.rm = T) - min(BathySmall.xyz$Elevation, na.rm = T))/254)
             colTable <- data.frame(Splits = levels(BathySmall.xyz$Splits), Color = rev(terrain.colors(255)))
-            BathySmall.xyz <- match.f(BathySmall.xyz, colTable, "Splits", "Splits", "Color")
+            BathySmall.xyz <- JRWToolBox::match.f(BathySmall.xyz, colTable, "Splits", "Splits", "Color")
             rgl::plot3d(BathySmall.xyz, col = BathySmall.xyz$Color)
     }
     
@@ -123,6 +123,7 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
    
     invisible(BathySmall)
 }
+
 
 
 
