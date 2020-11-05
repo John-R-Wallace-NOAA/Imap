@@ -46,7 +46,7 @@ ipts(longlat = npacific, axes = 'std', ...)
   \item{poly}{
      A single value or vector for the fill color(s) of the polygon(s).  If a list of is supplied to 'longlat' then each item of the list will, in turn, get
      a fill color from the vector of colors supplied.  The colors will be reused if necessary.  If a NA is in the vector, no polygon fill will
-     be done of the corresponding item in the 'longlat' list.
+     be done for the corresponding item in the 'longlat' list.
 }
   \item{lwd}{
      A single value or vector for the width of the lines. 
