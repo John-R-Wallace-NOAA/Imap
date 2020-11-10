@@ -82,7 +82,7 @@ select.lines(area = npacific, longrange, latrange, poly = NA, antarctic = FALSE,
      Line width of the tick marks.
 }
   \item{\dots}{
-          Any extra arguments are checked the a 'plt.' prefix.  Any such argument will be applied to the plot() function, all others will be applied to the
+          Any extra arguments are checked for a 'plt.' prefix.  Any such argument will be applied to the plot() function, all others will be applied to the
      lines() function. (For those looking to see how this was done, look at the top of the imap.ll() function and search on 'plot.dots' and 'lines.dots')
 }
 }

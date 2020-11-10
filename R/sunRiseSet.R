@@ -8,6 +8,9 @@ sunRiseSet <- function (Dates.Locs, timezone = "America/Los_Angeles")
     "  #    sunRiseSet(Dates.Locs)  "
     "  #    cbind(Dates.Locs, sunRiseSet(Dates.Locs)) "
     "  "
+    "  # Note that the first row in the example above is in PST and the second is in PDT.  "
+    "  # To always get PST use: timezone = 'ETC/GMT+8'  "
+    "  "
     "  # Locations and Dates need to be all in the same time zone for now.... "
     "  "
     sunrise.set <- function(lat, long, date, timezone = "UTC", num.days = 1) {
@@ -15,17 +18,15 @@ sunRiseSet <- function (Dates.Locs, timezone = "America/Los_Angeles")
         lat.long <- matrix(c(long, lat), nrow = 1)
         day <- as.POSIXct(date, format= "%Y-%m-%d", tz = timezone)
         sequence <- seq(from = day, length.out = num.days, by = "days")
-        sunrise <- sunriset(lat.long, sequence, direction = "sunrise", 
-            POSIXct = TRUE)
-        sunset <- sunriset(lat.long, sequence, direction = "sunset", 
-            POSIXct = TRUE)
+        sunrise <- maptools::sunriset(lat.long, sequence, direction = "sunrise", POSIXct = TRUE)
+        sunset <-  maptools::sunriset(lat.long, sequence, direction = "sunset", POSIXct = TRUE)
         ss <- data.frame(sunrise, sunset)
         ss <- ss[, -c(1, 3)]
         colnames(ss) <- c("sunRise", "sunSet")
-        ss$sunRise.hours <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1,1]), 12))
-        ss$sunSet.hours <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1,2]), 12))
-        ss$sunRise <- strftime(ss[1,1], format = "%H:%M")
-        ss$sunSet <- strftime(ss[1,2], format = "%H:%M")
+        ss$sunRise.hours <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1, 1], tz = timezone), 12))
+        ss$sunSet.hours  <- convert.hr.min.sec.to.decimal.hrs(substring(strftime(ss[1, 2], tz = timezone), 12))
+        ss$sunRise <- strftime(ss[1, 1], tz = timezone, format = "%H:%M")
+        ss$sunSet  <- strftime(ss[1, 2], tz = timezone, format = "%H:%M")
         ss
     }
     renum <- function(x, no.num = F) {
@@ -49,3 +50,5 @@ sunRiseSet <- function (Dates.Locs, timezone = "America/Los_Angeles")
     renum(Out)
 }
             
+
+
