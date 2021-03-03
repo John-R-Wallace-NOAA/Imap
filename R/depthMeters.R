@@ -40,7 +40,7 @@ depthMeters <- function (LongLat = c(-120, 33), layer = c('ETOPO1_ice_surface', 
         
         if (plot) {
            points(LongLat, col = "red", pch = 16)
-           cat("The default bounding box size when plotting is larger than the default box when not plotting, this may affect the depth value reported.\n\n")
+           cat("Note: The default bounding box size when plotting is larger than the default box when not plotting, this may affect the depth value reported.\n\n")
         }   
         
         -raster::extract(BathySmall, LongLat, method = method)
@@ -65,6 +65,7 @@ depthMeters <- function (LongLat = c(-120, 33), layer = c('ETOPO1_ice_surface', 
     
     Out
 }
+
 
 
 
