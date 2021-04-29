@@ -87,7 +87,7 @@ select.pts(tmp) # Left-click three or more times, right-click to stop.
 big.island <- select.pts(imap())  # Zoom into the Hawaiian Islands, right-click to stop, then put a polygon around the Big Island.
 imap(list(world.h.land, big.island))  # Re-zoom into the Hawaiian Islands.  Use ilines() if a line was selected which is not a polygon.
 
-imap()  # Zoom in to an area, right-click to stop.
+imap()  # Zoom into an area, right-click to stop.
 draw.lines()  # Left-click two or more times, right-click to stop.
 gdist.total(draw.lines(rainbow(12), lwd = 4, lty = 2))  # Left-click two or more times, right-click to stop.
 draw.polygon('purple', alpha = 0.2) # Left-click three or more times, right-click to stop.
