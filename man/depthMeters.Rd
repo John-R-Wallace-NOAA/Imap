@@ -91,6 +91,7 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
   depthMeters(c(-118.229967, 32.1018333), 0.02, plot3D = T, Goog=T)
     
 # A data frame or matrix can also be used with longitude in the first column and latitude in the second.
+# If you give \code{depthMeters} more than 5 locations the \code{plot} argument's default is not to create a figure for each one but to only return back the depths.
   LongLat <- data.frame(Long = c(-118.6442, -118.5227, -119.4888, -119.84, -120.00), 
                        Lat =  c(33.4817, 33.3485, 33.9634, 33.94, 33.00))
   depthMeters(LongLat)
