@@ -7,8 +7,8 @@ Plot data from NOAA's National Centers for Environmental Information, including 
 \code{plotRAST} creates figures from NOAA's National Centers for Environmental Information (mainly 1-minute resolution), including NOAA's U.S. Coastal Relief 
 Model for the contiguous U.S. (3 arc-second resolution) and 1 arc-second resolution from Southern California. The SoCal 1 arc-second data extends 
 to the southeastern corner of the U.S. West Coast's EEZ, however the SoCal 3 arc-second coverage goes further south and west.  Note also that the defaults for 
-land overlay (set to TRUE) and the contour lines are bathymetric centric. (The land overlay default for \code{imapToRAST} is FALSE and contour lines on both 
-land and sea are shown.)
+land overlay (set to TRUE) and greater density of the contour lines are bathymetric centric. (The land overlay default for the \code{imapToRAST} function is FALSE 
+and contour lines on both land and sea are shown, but the default density of the coutour lines is less.)
 }
 \usage{
 plotRAST(LongLat = NULL, polygons = NULL, longrange = c(-126, -124), latrange = c(41.5, 43.5), 
