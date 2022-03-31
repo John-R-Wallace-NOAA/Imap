@@ -15,7 +15,7 @@ select.pts <- function (pts, list.of.lists.obj = 1, outside.poly = FALSE, col = 
     points(pts[tf, 1], pts[tf, 2], ...)
 
     if(!any(tf, na.rm=TRUE))
-      stop('No points selected. A smoother polygon may be needed.')
+      stop('No points selected. A smoother or smaller polygon may be needed. The points from a series of smaller polygons can be combined and then duplicates removed.')
 
     if (outside.poly) 
         pts[!tf, ]
