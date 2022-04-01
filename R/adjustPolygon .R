@@ -1,4 +1,4 @@
-adjustPolygon <- function (xy, colLine = "red", colPoly = "purple", alpha = 0.25, add = FALSE, closePoly = TRUE, lty = 1, colBg = par()$bg, ...)  {
+adjustPolygon <- function (xy, colLine = "red", colPoly = "purple", alpha = 0.25, add = FALSE, closePoly = TRUE, lty = 'solid', colBg = par()$bg, ...)  {
     
     X <- xy[,1]
     Y <- xy[,2]
