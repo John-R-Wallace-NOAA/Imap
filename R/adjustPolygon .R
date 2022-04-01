@@ -1,7 +1,11 @@
-adjustPolygon <- function (xy, colLine = "red", colPoly = "purple", alpha = 0.25, closePoly = TRUE, lty = 1, colBg = par()$bg, ...)  {
+adjustPolygon <- function (xy, colLine = "red", colPoly = "purple", alpha = 0.25, add = FALSE, closePoly = TRUE, lty = 1, colBg = par()$bg, ...)  {
     
     X <- xy[,1]
     Y <- xy[,2]
+    
+    if(!add) 
+        plot(X, Y, xlab = ifelse(is.null(colnames(xy)[1]), "", colnames(xy)[1]), ylab = ifelse(is.null(colnames(xy)[2]), "", colnames(xy)[2]), 
+             type = "n", xaxt = "n", yaxt = "n", bty = "n")
     
     lines(X, Y, col = colLine, lty = lty, type = "o", ...)
     
