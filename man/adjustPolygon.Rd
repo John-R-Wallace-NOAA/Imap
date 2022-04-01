@@ -42,7 +42,8 @@ Addtional arguments passed to the \code{lines} and \code{polygon} functions.
 }
 }
 \value{
-A matrix or data frame (equal to the form of the \code{xy} argument), with the final values as adjusted by the interactive manipulations of the vertices.
+A matrix or data frame (equal to the form of the \code{xy} argument), with the final values as adjusted by the interactive manipulations 
+of the vertices is invisibly returned.
 }
 \author{
 John R. Wallace: \email{John.Wallace@noaa.gov} 
@@ -53,11 +54,14 @@ John R. Wallace: \email{John.Wallace@noaa.gov}
 \examples{
 \dontrun{
 
-# Click on a point and then click where to move the point. Repeat. 
-# Right click to stop and the polygon will fill with 'colPoly' color inside a border colored with 'borderPoly'.
 EEZ_test <- adjustPolygon(EEZ.Polygon.WestCoast) 
-adjustPolygon(EEZ_test, colLine = 'green', colPoly = 'blue', borderPoly = 'green')
+# Left click on a point and then left click where to move the point. Repeat with the same point or any other point. 
+# Right click to stop and the polygon will fill with 'colPoly' color (with transparency 'alpha') inside a border colored with 'borderPoly'.
+  
+# Re-adjust the result by again using 'adjustPolygon' 
+EEZ_test <- adjustPolygon(EEZ_test, colLine = 'green', colPoly = 'blue', borderPoly = 'green')  
 
+  
 imap() # Zoom into the west coast of the contiguous United States, allowing room for the EEZ polygon.
 adjustPolygon(EEZ.Polygon.WestCoast, add = TRUE)  # Adjust the polygon as directed above.
 
