@@ -37,10 +37,13 @@ The line type for the drawn lines and polygon. The default is: "solid" (equal to
   \item{colBg}{
 The color to be used for the background of the device region. The default is the current background in par(): par()$bg
 }
- \item{...}{
+  \item{...}{
 Addtional arguments passed to the \code{lines} and \code{polygon} functions.
 }
-
+}
+\value{
+A matrix or data frame (equal to the form of the \code{xy} argument), with the final values as adjusted by the interactive manipulations of the vertices.
+}
 \author{
 John R. Wallace: \email{John.Wallace@noaa.gov} 
 }
