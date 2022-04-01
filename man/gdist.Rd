@@ -1,82 +1,65 @@
-\name{gdist}
-\alias{gdist}
-\alias{gdist.total}
+\name{adjustPolygon}
+\alias{adjustPolygon}
 \title{
-Geodesic distance (great circle distance) between points
+Interactively move vertices of a polygon
 }
 \description{
-gdist() gives the geodesic distance between two points specified by latitude/longitude using Vincenty inverse formula for ellipsoids. 
-The distance is given in nautical miles (the default), meters, kilometers, or miles. gdist.total() applies gdist() to any number 
-of line segments.
+\code{adjustPolygon} interactively moves vertices of a polygon and saves the result.
 }
 \usage{
-gdist(lon.1, lat.1, lon.2, lat.2, units = "nm", a = 6378137.0, b = 6356752.3142, verbose = FALSE)
-
-gdist.total(longlat, units = "nm", segments = TRUE, digits = 2)
+adjustPolygon(xy, colLine = "red", colPoly = "purple", alpha = 0.25, borderPoly = 'black', add = FALSE, closePoly = TRUE, lty = "solid", colBg = par()$bg, ...)
 }
 \arguments{
-  \item{lon.1}{
-Longitude of the first point or vector points.
+  \item{xy}{
+A matrix or data frame where the x-axis values (perhaps longitude) are in the first column and the y-axis column (perhaps latitude) are in the second column.
 }
-  \item{lat.1}{
-Latitude of the first point or vector points.
+  \item{colLine}{
+The color of line that is drawn while the points are adjusted. The default is red.
 }
-  \item{lon.2}{
-Longitude of the second point or vector points.
+  \item{colPoly}{
+The color for filling the polygon after the moving of the verticies has been finished.
 }
-  \item{lat.2}{
-Latitude of the second point or vector points.
+  \item{alpha}{
+An alpha transparency value for \code{colPoly} where 0 is fully transparent and 1 is opaque. The default is 0.25.
 }
-  \item{units}{
-Any one of "nm": nautical miles (the default), "m": meters, "km": kilometers, or "miles": miles, for units of the returned value.
+ \item{colBorder}{
+The color of the polygon border after the moving of the verticies has been finished. The default is black. (The same default as \code{polygon}.)
 }
-  \item{a}{
-Major semiaxes of the ellipsoid in meters. The default is for the Earth: 6378137.0
+  \item{add}{
+When \code{add} is FALSE (the default) \code{plot} is called first. When add = TRUE the polygon is added to the current figure.
 }
-  \item{b}{
-Minor semiaxes of the ellipsoid in meters. The default is for the Earth: 6356752.3142
+  \item{closePoly}{
+When \code{closePoly} is TRUE (the default) the first point in the polygon is added to the end of polygon, ensuring the polygon is closed.
 }
-  \item{verbose}{
-Should extra information be output, the default is FALSE.
+  \item{lty}{
+The line type for the drawn lines and polygon. The default is: "solid" (equal to lty = 1).
 }
-  \item{longlat}{
-Two dimensional (n x 2) data in the form of a matrix or dataframe. The first column should be the longitude or x-axis column and the second
-the latitude or y-axis column.
+  \item{colBg}{
+The color to be used for the background of the device region. The default is the current background in par(): par()$bg
 }
-  \item{segments}{
-When there are more than two or more segments, should the distance for each segment be output. The default is TRUE.
-}
-  \item{digits}{
-The number of rounding digits to use in the segment output. The default is 2.
+  \item{...}{
+Addtional arguments passed to the \code{lines} and \code{polygon} functions.
 }
 }
 \value{
-The total geodesic distance in the units specified.
-}
-\references{
-Inspired by:  \url{http://www.movable-type.co.uk/scripts/LatLongVincenty.html}
-
-Vincenty, T.  Direct and inverse solutions of geodesics on the ellipsoid with application 
-of nested equations.  Survey Review XXII, 176, April 1975.  \url{http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf}
+A matrix or data frame (equal to the form of the \code{xy} argument), with the final values as adjusted by the interactive manipulations of the vertices.
 }
 \author{
 John R. Wallace: \email{John.Wallace@noaa.gov} 
 }
 \seealso{
-\code{\link{imap}}, \code{\link{draw.lines}}
+\code{\link{draw.polygon}}, \code{\link{select.pts}}
 }
 \examples{
 \dontrun{
 
-imap() # Zoom into an area, right-click to stop.
+# Click on a point and then click where to move the point. Repeat. 
+# Right click to stop and the polygon will fill with 'colPoly' color inside a border colored with 'borderPoly'.
+EEZ_test <- adjustPolygon(EEZ.Polygon.WestCoast) 
+adjustPolygon(EEZ_test, colLine = 'green', colPoly = 'blue', borderPoly = 'green')
 
-gdist.total(draw.lines(rainbow(10), lwd=4)) # Left-click two or more times, right-click to stop.
-
-# The total distance of the polygon's perimeter:
-gdist.total(draw.polygon())  # Left-click three or more times, right-click to stop.
-
-# The total distance of contiguous points (those not separated by NA's).
-gdist.total(select.pts(imap()[[1]]$ll)) # Zoom in to an area, right-click, and then select points by creating a polygon with left-clicks.
+imap() # Zoom into the west coast of the contiguous United States, allowing room for the EEZ polygon.
+adjustPolygon(EEZ.Polygon.WestCoast, add = TRUE)  # Adjust the polygon as directed above.
 
 }
 }
