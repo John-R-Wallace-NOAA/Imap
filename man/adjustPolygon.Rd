@@ -58,7 +58,7 @@ EEZ_test <- adjustPolygon(EEZ.Polygon.WestCoast)
 # Left click on a point and then left click where to move the point. Repeat with the same point or any other point. 
 # Right click to stop and the polygon will fill with 'colPoly' color (with transparency 'alpha') inside a border colored with 'borderPoly'.
   
-# Readjust the result by again using 'adjustPolygon' 
+# Readjust the result by using 'adjustPolygon' again
 EEZ_test <- adjustPolygon(EEZ_test, colLine = 'green', colPoly = 'blue', borderPoly = 'green')  
 
   
