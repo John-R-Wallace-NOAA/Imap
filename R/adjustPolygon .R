@@ -24,7 +24,7 @@ adjustPolygon <- function (xy, colLine = "red", colPoly = "purple", alpha = 0.25
         Y[length(Y)] <- Y[1]
     }
     
-    polygon(X, Y, col = col.alpha(colPoly, alpha), border = borderPoly, lty = lty, ...)
+    polygon(X, Y, col = Imap::col.alpha(colPoly, alpha), border = borderPoly, lty = lty, ...)
     
     out <- cbind(X, Y)
     colnames(out) <- colnames(xy)
