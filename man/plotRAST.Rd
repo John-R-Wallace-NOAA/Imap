@@ -148,6 +148,13 @@ Therefore to see the help for \code{raster()}, either load the package or use: \
    
    # Use imapToRAST() to zoom into an area which then will be replaced by a raster image with the same bounding box coordinates.
    imapToRAST()
+    
+   # 3D cloud of color banded points 
+   plotRAST(plot3D = TRUE)
+
+   # Raster image shown in Google Earth 
+   plotRAST(Google = TRUE)
+
 }
 }
 
