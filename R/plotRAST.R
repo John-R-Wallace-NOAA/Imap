@@ -84,7 +84,7 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
     # BathySmall <- raster::raster(Fname, xmn = minLon, xmx = maxLon, ymn = minLat, ymx = maxLat)
     BathySmall <- raster::raster(Fname) # Can't override limits inside of Fname
     # BathySmall.NA <- BathySmall
-    raster::NAvalue(BathySmall) <- BathySmall@data@min
+    raster::NAvalue(BathySmall) <- ifelse(is.na(BathySmall@data@min), 0.000001, BathySmall@data@min)
     
     if(plot) {
        raster::plot(BathySmall, alpha = alphaRaster)
@@ -123,6 +123,7 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
    
     invisible(BathySmall)
 }
+
 
 
 
