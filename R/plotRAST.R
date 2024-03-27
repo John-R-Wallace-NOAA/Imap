@@ -13,7 +13,7 @@ plotRAST <- function (LongLat = NULL, polygons = NULL, longrange = c(-126, -124)
         
     JRWToolBox::lib(raster)
     JRWToolBox::lib(sp)
-    JRWToolBox::lib(rgdal)
+    # JRWToolBox::lib(rgdal)
     JRWToolBox::lib(grDevices)
     
     if (plot3D) 
